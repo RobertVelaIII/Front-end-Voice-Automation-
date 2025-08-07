@@ -80,9 +80,9 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          website: website,
-          first_name: name,
-          phone_number: phoneNumber
+          websiteUrl: website,  // Using the parameter name expected by the backend
+          name: name,          // Using the parameter name expected by the backend
+          phoneNumber: phoneNumber  // Using the parameter name expected by the backend
         })
       });
       
