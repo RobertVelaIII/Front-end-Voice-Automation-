@@ -19,23 +19,30 @@ export default function Home() {
   const [analysisComplete, setAnalysisComplete] = useState(false);
   
   const handleNext = () => {
-    // If this is the website step, validate the URL first
+    console.log('handleNext called, current step:', step);
+    
+    // For any step, just advance
     if (step === 0) {
-      // Validate the URL
-      const { isValid, errorMessage } = validateUrl(website);
-      
-      if (!isValid) {
-        setUrlError(errorMessage || "Invalid URL");
+      // For website step, do minimal validation
+      if (!website.trim()) {
+        setUrlError("Please enter a website");
         return;
       }
       
-      // URL is valid, normalize it
-      const normalizedUrl = normalizeUrl(website);
-      setWebsite(normalizedUrl);
+      // Normalize URL if possible
+      try {
+        const normalizedUrl = normalizeUrl(website);
+        setWebsite(normalizedUrl);
+      } catch (e) {
+        // Just use as-is if normalization fails
+        console.error('URL normalization failed:', e);
+      }
+      
       setUrlError("");
       
-      // Immediately move to the next step
-      setStep(step + 1);
+      // Move to the next step
+      console.log('Moving to step 1');
+      setStep(1); // Explicitly set to 1 instead of step + 1
       
       // Start website analysis when moving from website step
       setIsAnalyzing(true);
@@ -49,7 +56,7 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          websiteUrl: normalizedUrl
+          websiteUrl: website.trim().startsWith('http') ? website : `https://${website.trim()}`
         })
       })
       .then(response => response.json())
@@ -65,6 +72,10 @@ export default function Home() {
       .finally(() => {
         setIsAnalyzing(false);
       });
+    } else if (step === 1) {
+      // For name step, just advance
+      console.log('Moving to step 2');
+      setStep(2); // Explicitly set to 2
     }
   };
   
@@ -129,7 +140,11 @@ export default function Home() {
   // Determine if the current step is complete
   const isStepComplete = () => {
     switch (step) {
-      case 0: return website.trim() !== "";
+      case 0: {
+        // Use the same validation logic as handleNext
+        const { isValid } = validateUrl(website);
+        return isValid;
+      }
       case 1: return name.trim() !== "";
       case 2: return phoneNumber.trim() !== "";
       default: return false;
@@ -209,8 +224,7 @@ export default function Home() {
                   </div>
                   <button
                     onClick={handleNext}
-                    disabled={!isStepComplete()}
-                    className={`w-full p-4 rounded-lg text-white font-medium text-base transition-all ${isStepComplete() ? 'bg-black' : 'bg-gray-500'}`}
+                    className="w-full p-4 rounded-lg text-white font-medium text-base transition-all bg-black"
                   >
                     Next
                   </button>
@@ -235,8 +249,7 @@ export default function Home() {
                     </button>
                     <button
                       onClick={handleNext}
-                      disabled={!isStepComplete()}
-                      className={`w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all ${isStepComplete() ? 'bg-black' : 'bg-gray-500'}`}
+                      className="w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all bg-black"
                     >
                       Next
                     </button>
@@ -262,8 +275,8 @@ export default function Home() {
                     </button>
                     <button
                       onClick={handleSubmit}
-                      disabled={!isStepComplete() || isSubmitting}
-                      className={`w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all relative ${isStepComplete() && !isSubmitting ? 'bg-black' : 'bg-gray-500'}`}
+                      disabled={isSubmitting}
+                      className="w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all relative bg-black"
                     >
                       {isSubmitting ? (
                         <>
