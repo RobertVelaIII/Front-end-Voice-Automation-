@@ -1,42 +1,102 @@
-# Callify - Front-End Repository
+# Callify - AI-Powered Call Script Generator
 
-This is the front-end repository for Callify, an AI-powered phone automation platform. This project is built with [Next.js](https://nextjs.org) and bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Callify is an AI-powered platform that analyzes business websites and generates personalized call scripts. This repository contains the front-end code built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+- **Website Analysis**: Enter a business website URL to analyze its content
+- **AI-Generated Call Scripts**: Automatically generate personalized call scripts based on website content
+- **Multi-step Form**: User-friendly interface for collecting necessary information
+- **URL Validation**: Robust validation for website URLs with support for domain-only input
 
 ## Project Structure
 
-This repository contains only the front-end code for Callify. A separate back-end repository will be created to handle server-side logic, API endpoints, and integration with voice AI services. The front-end will communicate with the back-end via API calls once both components are developed.
+This repository contains the front-end code for Callify. The back-end repository handles server-side logic, API endpoints, and integration with OpenAI services. The front-end communicates with the back-end via API calls.
+
+- `src/app/page.tsx`: Main application component with multi-step form
+- `src/lib/url-validator.ts`: URL validation utilities
+- `src/components/`: UI components
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ and npm/yarn
+- Access to the Callify backend API
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/callify.git
+cd callify
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment on Fly.io
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Callify is deployed on Fly.io. To deploy your own instance:
 
-## Learn More
+1. Install the Fly CLI:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+brew install flyctl
+# or
+curl -L https://fly.io/install.sh | sh
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Login to Fly.io:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+fly auth login
+```
 
-## Deploy on Vercel
+3. Initialize your app (first deployment only):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+fly launch
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Deploy updates:
+
+```bash
+fly deploy
+```
+
+Your app will be available at `https://your-app-name.fly.dev`
+
+## Backend Integration
+
+The front-end communicates with a Firebase Cloud Functions backend. The backend:
+
+1. Fetches and analyzes website content
+2. Uses OpenAI to generate business information and call scripts
+3. Returns structured data for the front-end to display
+
+The backend API endpoint is configured in the `handleNext` function in `src/app/page.tsx`.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
