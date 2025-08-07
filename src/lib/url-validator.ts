@@ -5,9 +5,9 @@
  */
 
 /**
- * Validates if a string is a properly formatted URL
+ * Validates if a string is a properly formatted URL or a domain name with extension
  * 
- * @param url - The URL string to validate
+ * @param url - The URL string or domain name to validate
  * @returns An object containing validation result and error message if applicable
  */
 export function validateUrl(url: string): { isValid: boolean; errorMessage?: string } {
@@ -19,8 +19,15 @@ export function validateUrl(url: string): { isValid: boolean; errorMessage?: str
     return { isValid: false, errorMessage: "Please enter a website URL" };
   }
 
+  // Check if it's a domain-only input (e.g., "example.com")
+  const domainOnlyRegex = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+  if (domainOnlyRegex.test(trimmedUrl)) {
+    // Valid domain name format (e.g., "example.com")
+    return { isValid: true };
+  }
+
   try {
-    // Create a URL object to validate the URL format
+    // If not a simple domain, try to parse as a full URL
     const urlObj = new URL(trimmedUrl);
     
     // Check if the protocol is http or https
@@ -54,7 +61,7 @@ export function validateUrl(url: string): { isValid: boolean; errorMessage?: str
     // URL constructor will throw if the URL is invalid
     return { 
       isValid: false, 
-      errorMessage: "Please enter a valid URL (e.g., https://example.com)" 
+      errorMessage: "Please enter a valid domain name (e.g., example.com) or full URL" 
     };
   }
 }
