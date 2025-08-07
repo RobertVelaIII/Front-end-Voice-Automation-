@@ -1,4 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Callify - Front-End Repository
+
+This is the front-end repository for Callify, an AI-powered phone automation platform. This project is built with [Next.js](https://nextjs.org) and bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Project Structure
+
+This repository contains only the front-end code for Callify. A separate back-end repository will be created to handle server-side logic, API endpoints, and integration with voice AI services. The front-end will communicate with the back-end via API calls once both components are developed.
 
 ## Getting Started
 
