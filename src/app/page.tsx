@@ -85,19 +85,12 @@ export default function Home() {
     }
   };
   
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
+  // Add state for call progress
+  const [callStatus, setCallStatus] = useState<'idle' | 'in-progress' | 'sent'>('idle');
+
+  // Function to initiate the call
+  const initiateCall = async () => {
     try {
-      // If analysis is not complete yet, wait for it
-      if (!analysisComplete && isAnalyzing) {
-        // Show a message that we're waiting for analysis
-        alert("Please wait while we analyze the website. This will just take a moment...");
-        setIsSubmitting(false);
-        return;
-      }
-      
       // Proceed with call initiation
       const response = await fetch('https://api-wsbax2crfa-uc.a.run.app/call', {
         method: 'POST',
@@ -105,28 +98,70 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          websiteUrl: website,  // Using the parameter name expected by the backend
-          name: name,          // Using the parameter name expected by the backend
-          phoneNumber: phoneNumber  // Using the parameter name expected by the backend
+          websiteUrl: website,
+          name: name,
+          phoneNumber: phoneNumber
         })
       });
       
       const data = await response.json();
       console.log('Call initiation result:', data);
       
-      // Show success message on button
+      // Update call status to sent and show success message on button
+      setCallStatus('sent');
       setCallSent(true);
       
-      // Wait 3 seconds before resetting the form
+      // Wait 3 seconds before resetting just the call status (not the entire form)
       setTimeout(() => {
-        resetForm();
+        // Don't reset the form, just reset the call status
         setCallSent(false);
+        setCallStatus('idle');
       }, 3000);
     } catch (error) {
       console.error('Error initiating call:', error);
+      setCallStatus('idle');
       alert('Failed to initiate call. Please try again.');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // Handle form submission
+  // Use a ref to track if a call is pending to avoid duplicate calls
+  const [pendingCall, setPendingCall] = useState(false);
+
+  // Use an effect to trigger the call when analysis completes
+  useEffect(() => {
+    // If analysis is complete and we have a pending call, make the call
+    if (analysisComplete && pendingCall) {
+      console.log('Analysis complete detected, initiating call...');
+      initiateCall();
+      setPendingCall(false);
+    }
+  }, [analysisComplete, pendingCall]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setCallStatus('in-progress'); // Show "Call in progress" immediately
+    
+    try {
+      // If analysis is not complete yet, set pendingCall flag
+      if (!analysisComplete && isAnalyzing) {
+        console.log('Analysis not complete yet, setting pending call flag...');
+        setPendingCall(true);
+        // The useEffect will handle initiating the call when analysis completes
+      } else {
+        // Analysis is already complete, proceed with the call immediately
+        console.log('Analysis already complete, initiating call immediately...');
+        initiateCall();
+      }
+    } catch (error) {
+      console.error('Error in handleSubmit:', error);
+      setCallStatus('idle');
+      setIsSubmitting(false);
+      setPendingCall(false);
+      alert('Failed to process your request. Please try again.');
     }
   };
   
@@ -215,7 +250,7 @@ export default function Home() {
                       type="url"
                       value={website}
                       onChange={handleWebsiteChange}
-                      placeholder="Enter Company Website (e.g., https://example.com)"
+                      placeholder="https://yourcompanywebsite.com"
                       className={`w-full p-4 bg-white border ${urlError ? 'border-red-500' : 'border-gray-200'} rounded-lg text-gray-700 text-base focus:outline-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400`}
                     />
                     {urlError && (
@@ -282,10 +317,11 @@ export default function Home() {
                         <>
                           <span className="opacity-0">Let's Talk</span>
                           <span className="absolute inset-0 flex items-center justify-center">
-                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-5 w-5 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
+                            {callStatus === 'in-progress' ? 'Call in progress...' : ''}
                           </span>
                         </>
                       ) : callSent ? (
