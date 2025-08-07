@@ -3,6 +3,7 @@
 import { MainLayout } from "@/components/main-layout";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { validateUrl, normalizeUrl } from "@/lib/url-validator";
 
 export default function Home() {
   const [step, setStep] = useState(0);
@@ -12,18 +13,30 @@ export default function Home() {
   const [analysisResult, setAnalysisResult] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState("");
+  const [urlError, setUrlError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [callSent, setCallSent] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   
   const handleNext = () => {
-    // Immediately move to the next step
-    if (step < 2) {
+    // If this is the website step, validate the URL first
+    if (step === 0) {
+      // Validate the URL
+      const { isValid, errorMessage } = validateUrl(website);
+      
+      if (!isValid) {
+        setUrlError(errorMessage || "Invalid URL");
+        return;
+      }
+      
+      // URL is valid, normalize it
+      const normalizedUrl = normalizeUrl(website);
+      setWebsite(normalizedUrl);
+      setUrlError("");
+      
+      // Immediately move to the next step
       setStep(step + 1);
-    }
-    
-    // If this is the website step, start the analysis in the background
-    if (step === 0 && website) {
+      
       // Start website analysis when moving from website step
       setIsAnalyzing(true);
       setAnalysisError("");
@@ -36,7 +49,7 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          websiteUrl: website
+          websiteUrl: normalizedUrl
         })
       })
       .then(response => response.json())
@@ -122,6 +135,17 @@ export default function Home() {
       default: return false;
     }
   };
+  
+  // Handle website input change
+  const handleWebsiteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setWebsite(value);
+    
+    // Clear error when user starts typing again
+    if (urlError) {
+      setUrlError("");
+    }
+  };
 
   return (
     <MainLayout showSidebar={false}>
@@ -171,13 +195,18 @@ export default function Home() {
             <div className="px-4 pt-6 pb-4 bg-gray-400/70">
               {step === 0 && (
                 <div className="space-y-4">
-                  <input
-                    type="url"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    placeholder="Enter Company Website"
-                    className="w-full p-4 bg-white border border-gray-200 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400"
-                  />
+                  <div className="space-y-1">
+                    <input
+                      type="url"
+                      value={website}
+                      onChange={handleWebsiteChange}
+                      placeholder="Enter Company Website (e.g., https://example.com)"
+                      className={`w-full p-4 bg-white border ${urlError ? 'border-red-500' : 'border-gray-200'} rounded-lg text-gray-700 text-base focus:outline-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400`}
+                    />
+                    {urlError && (
+                      <p className="text-red-500 text-sm">{urlError}</p>
+                    )}
+                  </div>
                   <button
                     onClick={handleNext}
                     disabled={!isStepComplete()}
