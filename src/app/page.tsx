@@ -1,103 +1,183 @@
+"use client";
+
+import { MainLayout } from "@/components/main-layout";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [step, setStep] = useState(0);
+  const [website, setWebsite] = useState("");
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  
+  const handleNext = () => {
+    if (step < 2) {
+      setStep(step + 1);
+    }
+  };
+  
+  const handlePrevious = () => {
+    if (step > 0) {
+      setStep(step - 1);
+    }
+  };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Call initiated for ${name} (${phoneNumber}) from ${website}`);
+  };
+  
+  const resetForm = () => {
+    setWebsite("");
+    setName("");
+    setPhoneNumber("");
+    setStep(0);
+  };
+  
+  // Determine if the current step is complete
+  const isStepComplete = () => {
+    switch (step) {
+      case 0: return website.trim() !== "";
+      case 1: return name.trim() !== "";
+      case 2: return phoneNumber.trim() !== "";
+      default: return false;
+    }
+  };
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <MainLayout showSidebar={false}>
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4 relative overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <video 
+            className="w-full h-full object-cover" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <source src="/videos/background.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {/* Overlay to ensure content remains visible */}
+          <div className="absolute inset-0 bg-black/30"></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="relative w-full max-w-md mx-auto z-10">
+          {/* Notification Container */}
+          <div className="absolute z-10 top-[25%] left-1/2 transform -translate-x-1/2 w-[85%] overflow-hidden shadow-xl rounded-xl">
+            {/* Notification header - lighter section */}
+            <div className="p-4 flex items-start bg-gray-200/80">
+              {/* App icon */}
+              <div className="w-12 h-12 mr-3 rounded-xl overflow-hidden shadow-sm">
+                <Image
+                  src="/images/152logo.png"
+                  alt="Callify Logo"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* App info */}
+              <div className="flex-1">
+                <div className="flex justify-between items-start">
+                  <h3 className="font-semibold text-base text-black">Try Callify's AI</h3>
+                  <span className="text-xs text-gray-600">9:41 AM</span>
+                </div>
+                <p className="text-sm text-gray-700 mt-0.5">Natural feelings conversations!</p>
+              </div>
+            </div>
+            
+            {/* Form content - changes based on step */}
+            <div className="px-4 pt-6 pb-4 bg-gray-400/70">
+              {step === 0 && (
+                <div className="space-y-4">
+                  <input
+                    type="url"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    placeholder="Enter Company Website"
+                    className="w-full p-4 bg-white border border-gray-200 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400"
+                  />
+                  <button
+                    onClick={handleNext}
+                    disabled={!isStepComplete()}
+                    className={`w-full p-4 rounded-lg text-white font-medium text-base transition-all ${isStepComplete() ? 'bg-black' : 'bg-gray-500'}`}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+              
+              {step === 1 && (
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter Your Name"
+                    className="w-full p-4 bg-white border border-gray-200 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400"
+                  />
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={handlePrevious}
+                      className="w-1/3 p-4 bg-gray-400 rounded-lg text-black font-medium text-base transition-all"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      disabled={!isStepComplete()}
+                      className={`w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all ${isStepComplete() ? 'bg-black' : 'bg-gray-500'}`}
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {step === 2 && (
+                <div className="space-y-4">
+                  <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Enter Phone Number"
+                    className="w-full p-4 bg-white border border-gray-200 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400"
+                  />
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={handlePrevious}
+                      className="w-1/3 p-4 bg-gray-400 rounded-lg text-black font-medium text-base transition-all"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={handleSubmit}
+                      disabled={!isStepComplete()}
+                      className={`w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all ${isStepComplete() ? 'bg-black' : 'bg-gray-500'}`}
+                    >
+                      Let's Talk
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* iPhone Image */}
+          <div className="relative w-full">
+            <Image
+              src="/images/iPhone.png"
+              alt="iPhone Mockup"
+              width={500}
+              height={1000}
+              className="w-full h-auto"
+              priority
+            />
+          </div>
+        </div>
+      </div>
+    </MainLayout>
   );
 }
