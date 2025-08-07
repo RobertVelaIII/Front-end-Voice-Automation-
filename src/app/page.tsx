@@ -2,17 +2,55 @@
 
 import { MainLayout } from "@/components/main-layout";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [step, setStep] = useState(0);
   const [website, setWebsite] = useState("");
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [analysisResult, setAnalysisResult] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisError, setAnalysisError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [analysisComplete, setAnalysisComplete] = useState(false);
   
   const handleNext = () => {
+    // Immediately move to the next step
     if (step < 2) {
       setStep(step + 1);
+    }
+    
+    // If this is the website step, start the analysis in the background
+    if (step === 0 && website) {
+      // Start website analysis when moving from website step
+      setIsAnalyzing(true);
+      setAnalysisError("");
+      setAnalysisComplete(false);
+      
+      // Run the analysis in the background
+      fetch('https://api-wsbax2crfa-uc.a.run.app/website-analysis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          websiteUrl: website
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Website analysis result:', data);
+        setAnalysisResult(JSON.stringify(data, null, 2));
+        setAnalysisComplete(true);
+      })
+      .catch(error => {
+        console.error('Error analyzing website:', error);
+        setAnalysisError('Failed to analyze website. Please try again.');
+      })
+      .finally(() => {
+        setIsAnalyzing(false);
+      });
     }
   };
   
@@ -22,9 +60,42 @@ export default function Home() {
     }
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Call initiated for ${name} (${phoneNumber}) from ${website}`);
+    setIsSubmitting(true);
+    
+    try {
+      // If analysis is not complete yet, wait for it
+      if (!analysisComplete && isAnalyzing) {
+        // Show a message that we're waiting for analysis
+        alert("Please wait while we analyze the website. This will just take a moment...");
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Proceed with call initiation
+      const response = await fetch('https://api-wsbax2crfa-uc.a.run.app/call', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          website: website,
+          first_name: name,
+          phone_number: phoneNumber
+        })
+      });
+      
+      const data = await response.json();
+      console.log('Call initiation result:', data);
+      alert(`Call initiated successfully for ${name}!`);
+      resetForm();
+    } catch (error) {
+      console.error('Error initiating call:', error);
+      alert('Failed to initiate call. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
   const resetForm = () => {
@@ -154,10 +225,22 @@ export default function Home() {
                     </button>
                     <button
                       onClick={handleSubmit}
-                      disabled={!isStepComplete()}
-                      className={`w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all ${isStepComplete() ? 'bg-black' : 'bg-gray-500'}`}
+                      disabled={!isStepComplete() || isSubmitting}
+                      className={`w-2/3 p-4 rounded-lg text-white font-medium text-base transition-all relative ${isStepComplete() && !isSubmitting ? 'bg-black' : 'bg-gray-500'}`}
                     >
-                      Let's Talk
+                      {isSubmitting ? (
+                        <>
+                          <span className="opacity-0">Let's Talk</span>
+                          <span className="absolute inset-0 flex items-center justify-center">
+                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          </span>
+                        </>
+                      ) : (
+                        "Let's Talk"
+                      )}
                     </button>
                   </div>
                 </div>
