@@ -17,6 +17,154 @@ This repository contains the front-end code for Callify. The back-end repository
 - `src/lib/url-validator.ts`: URL validation utilities
 - `src/components/`: UI components
 
+## SEO Optimization Guide
+
+To maximize search engine visibility for Callify, update the following files:
+
+### 1. Metadata Configuration (`src/app/layout.tsx`)
+
+```tsx
+export const metadata: Metadata = {
+  title: "Callify | AI Sales Assistant",
+  description: "Generate personalized sales call scripts with AI",
+  authors: [{ name: "Callify Team" }],
+  keywords: ["sales", "ai", "calls", "automation", "business"],
+  // Add these additional SEO properties:
+  metadataBase: new URL('https://callify.yourdomain.com'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+    },
+  },
+  openGraph: {
+    title: 'Callify | AI Sales Assistant',
+    description: 'Generate personalized sales call scripts with AI',
+    url: 'https://callify.yourdomain.com',
+    siteName: 'Callify',
+    images: [
+      {
+        url: 'https://callify.yourdomain.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Callify - AI Sales Assistant',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Callify | AI Sales Assistant',
+    description: 'Generate personalized sales call scripts with AI',
+    images: ['https://callify.yourdomain.com/twitter-image.jpg'],
+    creator: '@callify',
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+```
+
+### 2. Favicon and App Icons
+
+Create and add these files to enhance brand visibility across devices:
+
+- `src/app/favicon.ico`: Basic favicon (16x16 or 32x32 pixels)
+- `public/icon.png`: Larger app icon (192x192 pixels)
+- `public/apple-icon.png`: Apple device icon (180x180 pixels)
+- `public/og-image.jpg`: Open Graph image (1200x630 pixels)
+- `public/twitter-image.jpg`: Twitter card image (1200x600 pixels)
+
+### 3. Web App Manifest (`public/manifest.json`)
+
+Create this file for PWA support and better mobile experience:
+
+```json
+{
+  "name": "Callify - AI Sales Assistant",
+  "short_name": "Callify",
+  "description": "Generate personalized sales call scripts with AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+### 4. Robots.txt (`public/robots.txt`)
+
+Create this file to guide search engine crawlers:
+
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://callify.yourdomain.com/sitemap.xml
+```
+
+### 5. Sitemap (`public/sitemap.xml`)
+
+Create a sitemap to help search engines discover your pages:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://callify.yourdomain.com/</loc>
+    <lastmod>2025-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://callify.yourdomain.com/contact</loc>
+    <lastmod>2025-08-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+```
+
+### 6. Structured Data
+
+Add JSON-LD structured data to your pages for rich search results. For example, in `src/app/page.tsx`:
+
+```tsx
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Callify",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "AI-powered sales call script generator"
+    })
+  }}
+/>
+```
+
 ## Getting Started
 
 ### Prerequisites
