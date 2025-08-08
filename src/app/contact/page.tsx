@@ -9,6 +9,12 @@ export default function Contact() {
     email: "",
     message: ""
   });
+  const [status, setStatus] = useState({
+    submitting: false,
+    submitted: false,
+    error: false,
+    message: ""
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -18,10 +24,41 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you for your message. We'll get back to you soon!");
-    setFormData({ name: "", email: "", message: "" });
+    setStatus({ submitting: true, submitted: false, error: false, message: "Sending your message..." });
+    
+    try {
+      const response = await fetch("https://api-wsbax2crfa-uc.a.run.app/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+      
+      setStatus({
+        submitting: false,
+        submitted: true,
+        error: false,
+        message: "Thank you for your message. We'll get back to you soon!"
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setStatus({
+        submitting: false,
+        submitted: false,
+        error: true,
+        message: error instanceof Error ? error.message : "Failed to send message. Please try again."
+      });
+    }
   };
 
   return (
@@ -78,10 +115,23 @@ export default function Contact() {
             
             <button
               type="submit"
-              className="px-6 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition-colors"
+              disabled={status.submitting}
+              className={`px-6 py-2 ${status.submitting ? 'bg-gray-400' : 'bg-black hover:bg-gray-800'} text-white font-medium rounded-md transition-colors`}
             >
-              Send Message
+              {status.submitting ? 'Sending...' : 'Send Message'}
             </button>
+            
+            {status.submitted && (
+              <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-md">
+                {status.message}
+              </div>
+            )}
+            
+            {status.error && (
+              <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
+                {status.message}
+              </div>
+            )}
           </form>
         </div>
       </div>
