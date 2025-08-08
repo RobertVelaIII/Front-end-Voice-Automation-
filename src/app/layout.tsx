@@ -15,10 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Callify | Modern Web Experience",
-  description: "A high-end, modern website with beautiful UI/UX",
+  title: "Callify | AI Sales Assistant",
+  description: "Generate personalized sales call scripts with AI",
   authors: [{ name: "Callify Team" }],
-  keywords: ["nextjs", "react", "typescript", "tailwind", "framer-motion"],
+  keywords: ["sales", "ai", "calls", "automation", "business", "nextjs", "react"],
 };
 
 export default function RootLayout({
