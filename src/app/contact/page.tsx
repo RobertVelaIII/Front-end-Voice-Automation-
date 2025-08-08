@@ -2,6 +2,7 @@
 
 import { MainLayout } from "@/components/main-layout";
 import { useState } from "react";
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -43,26 +44,25 @@ export default function Contact() {
         throw new Error(data.error || "Something went wrong");
       }
       
-      setStatus({
-        submitting: false,
-        submitted: true,
-        error: false,
-        message: "Thank you for your message. We'll get back to you soon!"
-      });
+      toast.success("Thank you for your message. We'll get back to you soon!");
+      setStatus({ submitting: false, submitted: true, error: false, message: "" });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       console.error("Error submitting form:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to send message. Please try again.";
+      toast.error(errorMessage);
       setStatus({
         submitting: false,
         submitted: false,
         error: true,
-        message: error instanceof Error ? error.message : "Failed to send message. Please try again."
+        message: errorMessage
       });
     }
   };
 
   return (
     <MainLayout showSidebar={false}>
+      <Toaster position="top-center" />
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
         
@@ -120,18 +120,6 @@ export default function Contact() {
             >
               {status.submitting ? 'Sending...' : 'Send Message'}
             </button>
-            
-            {status.submitted && (
-              <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-md">
-                {status.message}
-              </div>
-            )}
-            
-            {status.error && (
-              <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
-                {status.message}
-              </div>
-            )}
           </form>
         </div>
       </div>
