@@ -30,7 +30,7 @@ export default function Contact() {
     setStatus({ submitting: true, submitted: false, error: false, message: "Sending your message..." });
     
     try {
-      const response = await fetch("https://api-wsbax2crfa-uc.a.run.app/api/contact", {
+            const response = await fetch("https://api-wsbax2crfa-uc.a.run.app/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
