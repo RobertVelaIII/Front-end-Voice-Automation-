@@ -1,100 +1,145 @@
 "use client";
 
-import { MainLayout } from "@/components/main-layout";
 import { useState } from "react";
+import { MainLayout } from "@/components/main-layout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: ""
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCredentials(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This is just a stub - in a real app, you would validate credentials against a backend
-    if (credentials.email && credentials.password) {
+    setError('');
+
+    // **BACKEND URL PLACEHOLDER**
+    // In a real app, you would make a POST request to your Firebase auth endpoint here.
+    // try {
+    //   const response = await fetch('YOUR_FIREBASE_AUTH_URL', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ email, password }),
+    //   });
+    //   if (!response.ok) throw new Error('Authentication failed');
+    //   const { token } = await response.json();
+    //   // You would typically save the token (e.g., in an HttpOnly cookie)
+    //   setIsAuthenticated(true);
+    // } catch (err) {
+    //   setError(err.message || 'Invalid email or password');
+    // }
+
+    // For demonstration purposes, we'll simulate a successful login:
+    if (email && password) {
+      console.log('Simulating successful login...');
       setIsAuthenticated(true);
+    } else {
+      setError('Please enter both email and password.');
     }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setCredentials({ email: "", password: "" });
+    setEmail('');
+    setPassword('');
+    setError('');
   };
+
+  if (isAuthenticated) {
+    return (
+      <MainLayout showSidebar={true}>
+        <div className="container mx-auto px-4 py-12">
+          <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl font-bold">Dashboard</h1>
+              <Button onClick={handleLogout} variant="outline">
+                  Log Out
+              </Button>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <Card>
+                  <CardHeader>
+                      <CardTitle>Analytics</CardTitle>
+                      <CardDescription>Your call analytics will be displayed here.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                      <p>Analytics content...</p>
+                  </CardContent>
+              </Card>
+              <Card>
+                  <CardHeader>
+                      <CardTitle>Recent Calls</CardTitle>
+                      <CardDescription>A list of your recent calls will appear here.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                      <p>Recent calls content...</p>
+                  </CardContent>
+              </Card>
+              <Card>
+                  <CardHeader>
+                      <CardTitle>Account Settings</CardTitle>
+                      <CardDescription>Manage your account and billing information.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                      <p>Account settings content...</p>
+                  </CardContent>
+              </Card>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout showSidebar={false}>
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold mb-6 text-white">Dashboard</h1>
-        
-        {isAuthenticated ? (
-          <div className="space-y-6">
-            <div className="bg-white/90 p-6 rounded-lg shadow-md border border-gray-300">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900">Welcome to your Dashboard</h2>
-              <p className="mb-4 text-gray-800">This is a placeholder for the authenticated dashboard area.</p>
-              <p className="mb-4 text-gray-800">In a complete application, you would see your account information, analytics, and controls here.</p>
-              
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="max-w-md mx-auto bg-white/90 p-6 rounded-lg shadow-md border border-gray-300">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900">Login to Access Dashboard</h2>
-            
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-800">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={credentials.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-400 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  required
+      <div className="flex items-center justify-center min-h-full">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardDescription>Enter your email below to access your dashboard.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input 
+                  id="email" 
+                  type="email" 
+                  placeholder="m@example.com" 
+                  required 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
                 />
               </div>
-              
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-800">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={credentials.password}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-400 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  required
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input 
+                  id="password" 
+                  type="password" 
+                  required 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
                 />
               </div>
-              
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-              >
-                Log In
-              </button>
+              {error && <p className="text-sm text-destructive">{error}</p>}
+              <Button type="submit" className="w-full">
+                Login
+              </Button>
+              <Button variant="outline" className="w-full">
+                Login with Google
+              </Button>
             </form>
-          </div>
-        )}
+            <div className="mt-4 text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <a href="/signup" className="underline">
+                Sign up
+              </a>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </MainLayout>
   );
