@@ -28,10 +28,13 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
       <DashboardHeader isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
       
       <div className="flex-1 flex">
-        <div className={cn(
-          "hidden md:block shrink-0 border-r transition-all duration-300",
-          isSidebarCollapsed ? "w-20" : "w-64"
-        )}>
+        {/* Desktop Sidebar */}
+        <div 
+          className={cn(
+            "hidden md:block shrink-0 border-r transition-all duration-300 sidebar-bg",
+            isSidebarCollapsed ? "w-20" : "w-64"
+          )}
+        >
           <Sidebar 
             isCollapsed={isSidebarCollapsed}
             toggleSidebar={toggleSidebar}
@@ -47,8 +50,7 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              style={{ backgroundColor: 'hsl(240 11.8% 75.3%)' }} // This is what changes the sidebar back ground color on mobile
-              className="fixed inset-0 z-50 w-full bg-background md:hidden"
+              className="fixed inset-0 z-50 w-full md:hidden sidebar-bg"
             >
               <Sidebar 
                 isCollapsed={false} 

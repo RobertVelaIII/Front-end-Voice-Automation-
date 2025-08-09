@@ -16,7 +16,7 @@ export function Sidebar({ className, isCollapsed, toggleSidebar }: SidebarProps)
   const { logout } = useAuth()
 
   return (
-    <div className={cn("h-full flex flex-col", className)}>
+    <div className={cn("h-full flex flex-col bg-background", className)}>
       <div className="p-4 flex items-center justify-between">
         {!isCollapsed && <h2 className="text-lg font-semibold">Dashboard</h2>}
         <Button variant="ghost" size="icon" onClick={toggleSidebar}>
