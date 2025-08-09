@@ -4,7 +4,7 @@ import { MainLayout } from "@/components/main-layout";
 
 export default function About() {
   return (
-    <MainLayout showSidebar={false}>
+    <MainLayout >
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-6 text-white">About Callify</h1>
         

@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <MainLayout>
+    <MainLayout >
       <div className="flex items-center justify-center py-12">
         <Card className="mx-auto max-w-sm">
           <CardHeader>

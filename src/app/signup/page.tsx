@@ -103,7 +103,7 @@ export default function SignupPage() {
   };
 
   return (
-    <MainLayout showSidebar={false}>
+    <MainLayout >
       <div className="flex items-center justify-center min-h-screen p-4">
         <Card className="w-full max-w-md mx-auto shadow-lg border-0 rounded-xl overflow-hidden">
           <CardHeader className="text-center">

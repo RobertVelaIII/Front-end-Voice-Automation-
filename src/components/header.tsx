@@ -7,6 +7,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 // Theme toggle removed
+import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
 
 const navItems = [
@@ -49,6 +50,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
+          {/* Theme toggle */}
+          <ThemeToggle className="hidden md:flex" />
+          
           {/* Mobile menu button */}
           <button
             className="md:hidden"

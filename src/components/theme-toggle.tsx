@@ -2,8 +2,6 @@
 
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-
 import { cn } from "@/lib/utils"
 
 /**
@@ -11,21 +9,58 @@ import { cn } from "@/lib/utils"
  * Switches between light and dark mode
  */
 export function ThemeToggle({ className }: { className?: string }) {
-  const { theme, setTheme } = useTheme()
+  const [isDark, setIsDark] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
 
-  // Prevent hydration mismatch by only rendering after mount
+  // Initialize theme from localStorage or system preference
   React.useEffect(() => {
-    setMounted(true)
+    // Check if we're on the client side
+    if (typeof window !== "undefined") {
+      // Check localStorage first
+      const savedTheme = localStorage.getItem("callify-theme")
+      
+      if (savedTheme === "dark") {
+        setIsDark(true)
+        document.documentElement.classList.add("dark")
+      } else if (savedTheme === "light") {
+        setIsDark(false)
+        document.documentElement.classList.remove("dark")
+      } else {
+        // Check system preference if no saved preference
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+        setIsDark(prefersDark)
+        if (prefersDark) {
+          document.documentElement.classList.add("dark")
+        } else {
+          document.documentElement.classList.remove("dark")
+        }
+      }
+      setMounted(true)
+    }
   }, [])
 
+  // Toggle theme function
+  const toggleTheme = () => {
+    const newIsDark = !isDark
+    setIsDark(newIsDark)
+    
+    if (newIsDark) {
+      document.documentElement.classList.add("dark")
+      localStorage.setItem("callify-theme", "dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+      localStorage.setItem("callify-theme", "light")
+    }
+  }
+
+  // Prevent hydration mismatch
   if (!mounted) {
     return <div className={cn("w-9 h-9", className)} />
   }
 
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={toggleTheme}
       className={cn(
         "w-9 h-9 flex items-center justify-center rounded-md border border-input bg-background transition-colors hover:bg-accent hover:text-accent-foreground",
         className

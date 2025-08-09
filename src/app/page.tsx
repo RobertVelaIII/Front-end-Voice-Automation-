@@ -198,7 +198,7 @@ export default function Home() {
   };
 
   return (
-    <MainLayout showSidebar={false}>
+    <MainLayout >
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4 relative overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full z-0">

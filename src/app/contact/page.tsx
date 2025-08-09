@@ -61,12 +61,11 @@ export default function Contact() {
   };
 
   return (
-    <MainLayout showSidebar={false}>
+    <MainLayout >
       <Toaster position="top-center" />
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
-        
-        <div className="max-w-2xl mx-auto">
+      <div className="container mx-auto px-4 py-12 flex flex-col items-center">
+        <div className="w-full max-w-2xl">
+          <h1 className="text-3xl font-bold mb-6 text-center">Contact Us</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-1">
@@ -116,7 +115,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={status.submitting}
-              className={`px-6 py-2 ${status.submitting ? 'bg-gray-400' : 'bg-black hover:bg-gray-800'} text-white font-medium rounded-md transition-colors`}
+              className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition-colors disabled:opacity-50"
             >
               {status.submitting ? 'Sending...' : 'Send Message'}
             </button>
