@@ -5,11 +5,13 @@ import { Construction } from "lucide-react"
 interface UnderConstructionProps {
   pageName?: string;
   estimatedCompletion?: string;
+  message?: string;
 }
 
 export function UnderConstruction({ 
   pageName = "This page", 
-  estimatedCompletion = "soon" 
+  estimatedCompletion = "soon",
+  message
 }: UnderConstructionProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-4">
@@ -21,8 +23,8 @@ export function UnderConstruction({
         <p className="text-muted-foreground mb-6">
           {pageName} is currently under construction and will be available {estimatedCompletion}.
         </p>
-        <p className="text-sm text-muted-foreground">
-          We're working hard to bring you the best experience possible. Thank you for your patience!
+        <p className="text-sm text-muted-foreground mb-4">
+          {message || "We're working hard to bring you the best experience possible. Thank you for your patience!"}
         </p>
       </div>
     </div>

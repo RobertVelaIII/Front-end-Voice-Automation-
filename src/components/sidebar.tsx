@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import { 
   LogOut, 
   ChevronLeft, 
@@ -18,6 +19,7 @@ import {
   PhoneIncoming,
   PhoneOutgoing,
   Voicemail,
+  Bot,
   PhoneForwarded,
   X,
   CreditCard,
@@ -25,8 +27,7 @@ import {
   Receipt,
   Building,
   Briefcase,
-  SwitchCamera,
-  Bot
+  SwitchCamera
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -163,13 +164,44 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
           />
           
           <CollapsibleSidebarItem
+            icon={<DollarSign className="h-4 w-4" />}
+            label="Add-ons"
+            isCollapsed={isCollapsed}
+            children={[
+              { 
+                href: "#", 
+                label: "AI X Accounts",
+                onClick: (e: React.MouseEvent) => {
+                  e.preventDefault();
+                  alert("Coming soon: Premium AI X account management services!");
+                }
+              },
+              { 
+                href: "#", 
+                label: "AI Instagram",
+                onClick: (e: React.MouseEvent) => {
+                  e.preventDefault();
+                  alert("Coming soon: AI-powered Instagram growth services!");
+                }
+              },
+              { 
+                href: "#", 
+                label: "Custom AI Assistants",
+                onClick: (e: React.MouseEvent) => {
+                  e.preventDefault();
+                  alert("Coming soon: Personalized AI assistants tailored to your business needs!");
+                }
+              },
+            ]}
+          />
+          
+          <CollapsibleSidebarItem
             icon={<HelpCircle className="h-4 w-4" />}
             label="Help"
             isCollapsed={isCollapsed}
             children={[
               { href: "/dashboard/help/documentation", label: "Documentation" },
               { href: "/dashboard/help/tutorials", label: "Tutorials" },
-              { href: "/dashboard/help/faq", label: "FAQ" },
               { href: "/dashboard/help/support", label: "Contact Support" },
               { href: "/dashboard/help/community", label: "Community" },
             ]}
@@ -177,6 +209,19 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
         </nav>
       </div>
       <div className="p-4 border-t">
+        <Button
+          variant="outline"
+          className={cn(
+            "w-full mb-3 flex items-center gap-2 bg-primary/10 hover:bg-primary/20 border-primary/20",
+            isCollapsed && "justify-center p-2"
+          )}
+          asChild
+        >
+          <Link href="/dashboard/ask-ai">
+            <Bot className="h-4 w-4 text-primary" />
+            {!isCollapsed && <span>Ask AI</span>}
+          </Link>
+        </Button>
         <div className="flex items-center gap-2 mb-3" onClick={(e) => e.stopPropagation()}>
           <ThemeToggle className={cn(isCollapsed ? "mx-auto" : "")} />
           {!isCollapsed && <span className="text-sm font-medium">Theme</span>}

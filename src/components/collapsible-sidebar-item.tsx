@@ -14,6 +14,7 @@ interface CollapsibleSidebarItemProps {
   children?: {
     href: string
     label: string
+    onClick?: (e: React.MouseEvent) => void
   }[]
   href?: string
   onClick?: () => void
@@ -89,16 +90,27 @@ export function CollapsibleSidebarItem({
                 className="absolute left-0 top-1/2 w-3 h-px bg-gray-300 dark:bg-gray-600" 
                 aria-hidden="true" 
               />
-              <Button
-                variant="ghost"
-                size="sm"
-                asChild
-                className="w-full justify-start pl-6 text-sm font-normal"
-              >
-                <Link href={child.href}>
+              {child.onClick ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start pl-6 text-sm font-normal"
+                  onClick={child.onClick}
+                >
                   {child.label}
-                </Link>
-              </Button>
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="w-full justify-start pl-6 text-sm font-normal"
+                >
+                  <Link href={child.href}>
+                    {child.label}
+                  </Link>
+                </Button>
+              )}
             </div>
           ))}
         </div>
