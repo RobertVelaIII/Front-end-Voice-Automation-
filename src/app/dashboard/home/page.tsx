@@ -38,7 +38,7 @@ export default function HomePage() {
           <CardContent className="pt-6">
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-medium mb-2">New Navigation Features</h3>
+                <h3 className="text-lg font-medium mb-2">New Navigation Features & Performance Boost</h3>
                 <p className="text-muted-foreground">We've improved the sidebar with new sections to help you get around easier:</p>
                 <ul className="list-disc ml-6 mt-2 space-y-1">
                   <li>Added <strong>Ask AI</strong> button for quick assistance (coming soon)</li>
@@ -46,51 +46,52 @@ export default function HomePage() {
                   <li>Improved <strong>Help</strong> section with documentation and support</li>
                   <li>Better organization of settings and billing options</li>
                 </ul>
+                <p className="text-muted-foreground mt-4">Additionally, we've optimized our servers on Fly.io to always stay awake now, which means no more cold starts, and faster website loading times! 🚀</p>
               </div>
               
-              <div className="relative bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/30 p-6 rounded-lg border-2 border-amber-500 shadow-lg overflow-hidden">
+              <div className="relative bg-white dark:bg-gray-800 p-6 rounded-lg border-2 border-blue-600 shadow-lg overflow-hidden">
                 {/* Background decorative elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-amber-200 dark:bg-amber-800/20 rounded-full opacity-20"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 -ml-6 -mb-6 bg-orange-200 dark:bg-orange-800/20 rounded-full opacity-20"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-blue-200 dark:bg-blue-700/30 rounded-full opacity-20"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 -ml-6 -mb-6 bg-indigo-200 dark:bg-indigo-700/30 rounded-full opacity-20"></div>
                 
                 {/* Header with icon */}
                 <div className="relative">
-                  <h3 className="text-xl font-bold mb-3 flex items-center gap-2 text-amber-800 dark:text-amber-400">
-                    <span className="flex items-center justify-center bg-amber-500 text-white p-1 rounded-full w-7 h-7 text-center">⚡</span>
+                  <h3 className="text-xl font-bold mb-3 flex items-center gap-2 text-blue-700 dark:text-blue-300">
+                    <span className="flex items-center justify-center bg-blue-600 text-white p-1 rounded-full w-7 h-7 text-center">⚡</span>
                     <span>CRITICAL PATH</span>
                   </h3>
                   
                   {/* Progress bar */}
                   <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full" style={{width: '75%'}}></div>
+                    <div className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full" style={{width: '75%'}}></div>
                   </div>
                   
-                  <p className="mb-4 font-medium text-amber-900 dark:text-amber-300">Our top priority is enabling powerful automated business calls:</p>
+                  <p className="mb-4 font-medium text-gray-800 dark:text-gray-200">Our top priority is enabling powerful automated business calls:</p>
                   
                   {/* Timeline-style list */}
-                  <div className="space-y-4 relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-amber-300 dark:before:bg-amber-700">
+                  <div className="space-y-4 relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-blue-400 dark:before:bg-blue-600">
                     <div className="relative">
-                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-gray-800"></div>
-                      <h4 className="font-bold text-amber-800 dark:text-amber-400">Website Analysis</h4>
-                      <p className="text-sm">Improved accuracy in analyzing your business website for better call context</p>
+                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-800"></div>
+                      <h4 className="font-bold text-blue-700 dark:text-blue-300">Website Analysis</h4>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">Improved accuracy in analyzing your business website for better call context</p>
                     </div>
                     
                     <div className="relative">
-                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-gray-800"></div>
-                      <h4 className="font-bold text-amber-800 dark:text-amber-400">High-Energy Sales Scripts</h4>
-                      <p className="text-sm">AI now creates Jordan Belfort-style sales scripts that drive conversions</p>
+                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-800"></div>
+                      <h4 className="font-bold text-blue-700 dark:text-blue-300">High-Energy Sales Scripts</h4>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">AI now creates Jordan Belfort-style sales scripts that drive conversions</p>
                     </div>
                     
                     <div className="relative">
-                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-gray-800"></div>
-                      <h4 className="font-bold text-amber-800 dark:text-amber-400">Business Recognition</h4>
-                      <p className="text-sm">Enhanced identification of your business name and details in every call</p>
+                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-800"></div>
+                      <h4 className="font-bold text-blue-700 dark:text-blue-300">Business Recognition</h4>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">Enhanced identification of your business name and details in every call</p>
                     </div>
                   </div>
                   
-                  <div className="mt-4 p-3 bg-amber-100 dark:bg-amber-900/30 rounded-md border border-amber-200 dark:border-amber-800">
-                    <p className="text-sm font-medium flex items-center gap-2">
-                      <span className="text-amber-600">✅</span>
+                  <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/50 rounded-md border border-blue-300 dark:border-blue-700">
+                    <p className="text-sm font-medium flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                      <span className="text-green-600 dark:text-green-400">✅</span>
                       These improvements ensure your automated calls sound professional and represent your business accurately.
                     </p>
                   </div>
@@ -107,8 +108,8 @@ export default function HomePage() {
                 </ul>
               </div>
               
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                <p className="text-sm">Thank you for being part of our journey! We're constantly improving Callify to better serve your business needs.</p>
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-blue-300 dark:border-blue-700 shadow-sm">
+                <p className="text-sm font-medium text-gray-800 dark:text-gray-200">Thank you for being part of our journey! We're constantly improving Callify to better serve your business needs.</p>
               </div>
             </div>
           </CardContent>
