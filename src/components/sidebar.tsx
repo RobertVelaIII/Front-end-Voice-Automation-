@@ -121,7 +121,10 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
             icon={<Mail className="h-4 w-4" />}
             label="Inbox"
             isCollapsed={isCollapsed}
-            href="/dashboard/inbox"
+            children={[
+              { href: "/dashboard/inbox/notifications", label: "Notifications" },
+              { href: "/dashboard/inbox/messages", label: "Direct Messages" },
+            ]}
           />
           
           <CollapsibleSidebarItem
