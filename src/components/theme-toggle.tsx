@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 
 /**
@@ -9,48 +10,19 @@ import { cn } from "@/lib/utils"
  * Switches between light and dark mode
  */
 export function ThemeToggle({ className }: { className?: string }) {
-  const [isDark, setIsDark] = React.useState(false)
+  const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
-
-  // Initialize theme from localStorage or system preference
+  
+  // After mounting, we can safely show the UI
   React.useEffect(() => {
-    // Check if we're on the client side
-    if (typeof window !== "undefined") {
-      // Check localStorage first
-      const savedTheme = localStorage.getItem("callify-theme")
-      
-      if (savedTheme === "dark") {
-        setIsDark(true)
-        document.documentElement.classList.add("dark")
-      } else if (savedTheme === "light") {
-        setIsDark(false)
-        document.documentElement.classList.remove("dark")
-      } else {
-        // Check system preference if no saved preference
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-        setIsDark(prefersDark)
-        if (prefersDark) {
-          document.documentElement.classList.add("dark")
-        } else {
-          document.documentElement.classList.remove("dark")
-        }
-      }
-      setMounted(true)
-    }
+    setMounted(true)
   }, [])
 
-  // Toggle theme function
-  const toggleTheme = () => {
-    const newIsDark = !isDark
-    setIsDark(newIsDark)
-    
-    if (newIsDark) {
-      document.documentElement.classList.add("dark")
-      localStorage.setItem("callify-theme", "dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-      localStorage.setItem("callify-theme", "light")
-    }
+  // Toggle theme function with event handling
+  const handleToggleTheme = (e: React.MouseEvent) => {
+    // Stop event propagation to prevent it from closing the mobile menu
+    e.stopPropagation()
+    setTheme(theme === "dark" ? "light" : "dark")
   }
 
   // Prevent hydration mismatch
@@ -60,7 +32,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   return (
     <button
-      onClick={toggleTheme}
+      onClick={handleToggleTheme}
       className={cn(
         "w-9 h-9 flex items-center justify-center rounded-md border border-input bg-background transition-colors hover:bg-accent hover:text-accent-foreground",
         className

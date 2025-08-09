@@ -61,11 +61,18 @@ export function Sidebar({ className, isCollapsed, toggleSidebar }: SidebarProps)
         </nav>
       </div>
       <div className="p-4 border-t">
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2 mb-3" onClick={(e) => e.stopPropagation()}>
           <ThemeToggle className={cn(isCollapsed ? "mx-auto" : "")} />
           {!isCollapsed && <span className="text-sm font-medium">Theme</span>}
         </div>
-        <Button onClick={logout} variant="ghost" className="w-full justify-start gap-3">
+        <Button 
+          onClick={(e) => {
+            e.stopPropagation();
+            logout();
+          }} 
+          variant="ghost" 
+          className="w-full justify-start gap-3"
+        >
           <LogOut className="h-4 w-4" />
           {!isCollapsed && <span>Log Out</span>}
         </Button>
