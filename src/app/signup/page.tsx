@@ -179,10 +179,10 @@ export default function SignupPage() {
                   </div>
                 ) : 'Create Account'}
               </Button>
-              <div className="relative flex py-5 items-center">
-                <div className="flex-grow border-t border-gray-300"></div>
-                <span className="flex-shrink mx-4 text-sm text-gray-500">or continue with</span>
-                <div className="flex-grow border-t border-gray-300"></div>
+              <div className="flex items-center justify-center my-6 gap-4">
+                <div className="h-px bg-gray-300 dark:bg-gray-600 flex-grow"></div>
+                <span className="text-xs uppercase text-muted-foreground font-medium">OR CONTINUE WITH</span>
+                <div className="h-px bg-gray-300 dark:bg-gray-600 flex-grow"></div>
               </div>
               <div className="flex justify-center">
                 <button 
