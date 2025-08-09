@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { SidebarProvider } from '@/contexts/SidebarContext';
 import "@/styles/globals.css";
 
 const geistSans = Geist({
@@ -35,9 +36,11 @@ export default function RootLayout({
       >
         <GoogleOAuthProvider clientId="383133649093-d5d18iuisj7s5rfe1drpsea558p6jf6d.apps.googleusercontent.com">
           <AuthProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-            </ThemeProvider>
+            <SidebarProvider>
+              <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                {children}
+              </ThemeProvider>
+            </SidebarProvider>
           </AuthProvider>
         </GoogleOAuthProvider>
       </body>

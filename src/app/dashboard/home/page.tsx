@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { DashboardLayout } from "@/components/dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function HomePage() {
@@ -18,14 +17,11 @@ export default function HomePage() {
 
   if (loading || !user) {
     return (
-      <DashboardLayout>
         <div className="flex justify-center items-center h-screen">Loading...</div>
-      </DashboardLayout>
     );
   }
 
   return (
-    <DashboardLayout>
       <div className="container mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
@@ -60,6 +56,5 @@ export default function HomePage() {
           </Card>
         </div>
       </div>
-    </DashboardLayout>
   );
 }

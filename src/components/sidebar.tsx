@@ -18,28 +18,62 @@ import {
   PhoneIncoming,
   PhoneOutgoing,
   Voicemail,
-  PhoneForwarded
+  PhoneForwarded,
+  X
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { CollapsibleSidebarItem } from "./collapsible-sidebar-item"
+import { useSidebar } from "@/contexts/SidebarContext"
+import { useEffect, useState } from "react"
 
 interface SidebarProps {
   className?: string;
-  isCollapsed: boolean;
-  toggleSidebar: () => void;
+  isMobile?: boolean;
+  onMobileClose?: () => void;
 }
 
-export function Sidebar({ className, isCollapsed, toggleSidebar }: SidebarProps) {
+export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarProps) {
   const { logout } = useAuth()
+  const { isSidebarCollapsed: isCollapsed, toggleSidebar, setIsSidebarCollapsed } = useSidebar()
+  
+  // Detect if we're on mobile based on window width
+  const [isActuallyMobile, setIsActuallyMobile] = useState(false)
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsActuallyMobile(window.innerWidth < 768) // md breakpoint
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Handle sidebar toggle differently on mobile
+  const handleSidebarToggle = () => {
+    if (isActuallyMobile) {
+      // On mobile, if we're collapsing the sidebar, close the mobile menu
+      if (!isCollapsed) {
+        onMobileClose?.();
+      }
+    }
+    toggleSidebar();
+  };
 
   return (
     <div className={cn("h-full flex flex-col bg-background", className)}>
       <div className="p-4 flex items-center justify-between">
         {!isCollapsed && <h2 className="text-lg font-semibold">Dashboard</h2>}
-        <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-        </Button>
+        {isActuallyMobile ? (
+          <Button variant="ghost" size="icon" onClick={onMobileClose}>
+            <X className="h-4 w-4" />
+          </Button>
+        ) : (
+          <Button variant="ghost" size="icon" onClick={handleSidebarToggle}>
+            {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </Button>
+        )}
       </div>
       <div className="flex-1 px-4 overflow-y-auto">
         <nav className="space-y-1">

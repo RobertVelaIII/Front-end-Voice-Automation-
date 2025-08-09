@@ -1,10 +1,11 @@
 "use client"
 
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useSidebar } from "@/contexts/SidebarContext"
 
 interface CollapsibleSidebarItemProps {
   icon: ReactNode
@@ -26,12 +27,13 @@ export function CollapsibleSidebarItem({
   href,
   onClick
 }: CollapsibleSidebarItemProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isItemExpanded, toggleExpandedItem } = useSidebar()
+  const isOpen = isItemExpanded(label)
   const hasChildren = children && children.length > 0
   
   const handleClick = () => {
     if (hasChildren) {
-      setIsOpen(!isOpen)
+      toggleExpandedItem(label)
     } else if (onClick) {
       onClick()
     }
@@ -40,11 +42,11 @@ export function CollapsibleSidebarItem({
   const ButtonContent = (
     <>
       <div className="flex items-center flex-1">
-        <span className="mr-3">{icon}</span>
+        <span className="mr-2">{icon}</span>
         {!isCollapsed && <span className="flex-1">{label}</span>}
       </div>
       {!isCollapsed && hasChildren && (
-        <span className="ml-auto">
+        <span className="ml-1">
           {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
         </span>
       )}
@@ -75,19 +77,29 @@ export function CollapsibleSidebarItem({
       )}
       
       {hasChildren && !isCollapsed && isOpen && (
-        <div className="ml-6 mt-1 space-y-1">
+        <div className="ml-6 mt-1 space-y-1 relative">
+          {/* Connector line */}
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-300 dark:bg-gray-600" 
+               aria-hidden="true" />
+          
           {children.map((child, index) => (
-            <Button
-              key={index}
-              variant="ghost"
-              size="sm"
-              asChild
-              className="w-full justify-start pl-6 text-sm font-normal"
-            >
-              <Link href={child.href}>
-                {child.label}
-              </Link>
-            </Button>
+            <div key={index} className="relative">
+              {/* Horizontal connector line */}
+              <div 
+                className="absolute left-0 top-1/2 w-3 h-px bg-gray-300 dark:bg-gray-600" 
+                aria-hidden="true" 
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="w-full justify-start pl-6 text-sm font-normal"
+              >
+                <Link href={child.href}>
+                  {child.label}
+                </Link>
+              </Button>
+            </div>
           ))}
         </div>
       )}

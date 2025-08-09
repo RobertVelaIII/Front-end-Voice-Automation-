@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { Phone, Loader2 } from "lucide-react"
 import { toast } from "sonner"
+import { DashboardLayout } from "@/components/dashboard-layout"
 
 export default function SendCallPage() {
   const [phoneNumber, setPhoneNumber] = useState("")
@@ -16,7 +17,7 @@ export default function SendCallPage() {
   const [voiceType, setVoiceType] = useState("jordan")
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSendCall = async (e: React.FormEvent) => {
+  const handleSendCall = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
     if (!phoneNumber || !script) {
@@ -43,10 +44,10 @@ export default function SendCallPage() {
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">Send Call</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="container mx-auto py-8">
+        <h1 className="text-3xl font-bold mb-6">Send Call</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="shadow-md">
           <CardHeader>
             <CardTitle>Call Details</CardTitle>
@@ -69,8 +70,8 @@ export default function SendCallPage() {
               
               <div className="space-y-2">
                 <Label htmlFor="voiceType">Voice Type</Label>
-                <Select value={voiceType} onValueChange={setVoiceType}>
-                  <SelectTrigger>
+                <Select value={voiceType} onValueChange={(value: string) => setVoiceType(value)}>
+                  <SelectTrigger id="voiceType">
                     <SelectValue placeholder="Select voice type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -148,7 +149,7 @@ export default function SendCallPage() {
             </div>
           </CardFooter>
         </Card>
+        </div>
       </div>
-    </div>
   )
 }
