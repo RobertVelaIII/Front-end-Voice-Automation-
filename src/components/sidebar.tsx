@@ -19,7 +19,14 @@ import {
   PhoneOutgoing,
   Voicemail,
   PhoneForwarded,
-  X
+  X,
+  CreditCard,
+  DollarSign,
+  Receipt,
+  Building,
+  Briefcase,
+  SwitchCamera,
+  Bot
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -75,7 +82,7 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
           </Button>
         )}
       </div>
-      <div className="flex-1 px-4 overflow-y-auto">
+      <div className="flex-1 px-4 overflow-y-auto max-h-[calc(100vh-8rem)]">
         <nav className="space-y-1">
           <CollapsibleSidebarItem
             icon={<Home className="h-4 w-4" />}
@@ -85,24 +92,28 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
           />
           
           <CollapsibleSidebarItem
+            icon={<Building className="h-4 w-4" />}
+            label="Organizations"
+            isCollapsed={isCollapsed}
+            children={[
+              { href: "/dashboard/organizations/switch", label: "Switch Organization" },
+              { href: "/dashboard/organizations/manage", label: "Manage Organizations" },
+              { href: "/dashboard/organizations/settings", label: "Organization Settings" },
+              { href: "/dashboard/organizations/assistants", label: "AI Assistants" },
+            ]}
+          />
+          
+          <CollapsibleSidebarItem
             icon={<BarChart2 className="h-4 w-4" />}
             label="Analytics"
             isCollapsed={isCollapsed}
-            href="/dashboard/analytics"
-          />
-          
-          <CollapsibleSidebarItem
-            icon={<Users className="h-4 w-4" />}
-            label="Contacts"
-            isCollapsed={isCollapsed}
-            href="/dashboard/contacts"
-          />
-          
-          <CollapsibleSidebarItem
-            icon={<FileText className="h-4 w-4" />}
-            label="Scripts"
-            isCollapsed={isCollapsed}
-            href="/dashboard/scripts"
+            children={[
+              { href: "/dashboard/analytics/overview", label: "Dashboard" },
+              { href: "/dashboard/analytics/calls", label: "Call Performance" },
+              { href: "/dashboard/analytics/conversion", label: "Conversion Rates" },
+              { href: "/dashboard/analytics/roi", label: "ROI Tracking" },
+              { href: "/dashboard/analytics/reports", label: "Custom Reports" },
+            ]}
           />
           
           <CollapsibleSidebarItem
@@ -128,17 +139,40 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
           />
           
           <CollapsibleSidebarItem
+            icon={<CreditCard className="h-4 w-4" />}
+            label="Billing & Credits"
+            isCollapsed={isCollapsed}
+            children={[
+              { href: "/dashboard/billing/plans", label: "Plans & Limits" },
+              { href: "/dashboard/billing/purchase", label: "Purchase Credits" },
+              { href: "/dashboard/billing/settings", label: "Billing Settings" },
+            ]}
+          />
+          
+          <CollapsibleSidebarItem
             icon={<Settings className="h-4 w-4" />}
             label="Settings"
             isCollapsed={isCollapsed}
-            href="/dashboard/settings"
+            children={[
+              { href: "/dashboard/settings/account", label: "Account" },
+              { href: "/dashboard/settings/profile", label: "Profile" },
+              { href: "/dashboard/settings/security", label: "Security & Privacy" },
+              { href: "/dashboard/settings/integrations", label: "Integrations" },
+              { href: "/dashboard/settings/api", label: "API & Webhooks" },
+            ]}
           />
           
           <CollapsibleSidebarItem
             icon={<HelpCircle className="h-4 w-4" />}
             label="Help"
             isCollapsed={isCollapsed}
-            href="/dashboard/help"
+            children={[
+              { href: "/dashboard/help/documentation", label: "Documentation" },
+              { href: "/dashboard/help/tutorials", label: "Tutorials" },
+              { href: "/dashboard/help/faq", label: "FAQ" },
+              { href: "/dashboard/help/support", label: "Contact Support" },
+              { href: "/dashboard/help/community", label: "Community" },
+            ]}
           />
         </nav>
       </div>
