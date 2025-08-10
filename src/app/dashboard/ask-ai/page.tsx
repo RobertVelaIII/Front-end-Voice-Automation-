@@ -126,7 +126,6 @@ export default function AskAIPage() {
   const [chatSessions, setChatSessions] = useState<ChatSession[]>(mockChatSessions)
   
   // State for settings
-  const [selectedModel, setSelectedModel] = useState("gpt-4")
   const [temperature, setTemperature] = useState(0.7)
   const [maxTokens, setMaxTokens] = useState(2048)
   const [useCallHistory, setUseCallHistory] = useState(true)
@@ -390,16 +389,7 @@ export default function AskAIPage() {
                     >
                       <Send className="h-4 w-4" />
                     </Button>
-                    {messages.length > 0 && (
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="icon"
-                        onClick={handleNewChat}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    )}
+
                   </form>
                   <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
                     <Info className="h-3 w-3" />
@@ -487,22 +477,7 @@ export default function AskAIPage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="model">AI Model</Label>
-                  <Select value={selectedModel} onValueChange={setSelectedModel}>
-                    <SelectTrigger id="model">
-                      <SelectValue placeholder="Select model" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="gpt-4">GPT-4 (Most Capable)</SelectItem>
-                      <SelectItem value="gpt-3.5-turbo">GPT-3.5 Turbo (Faster)</SelectItem>
-                      <SelectItem value="callify-specialized">Callify Specialized (Sales Focused)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Select the AI model that best suits your needs. More capable models provide better responses but may be slower.
-                  </p>
-                </div>
+
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -576,7 +551,6 @@ export default function AskAIPage() {
               <Button 
                 variant="outline" 
                 onClick={() => {
-                  setSelectedModel("gpt-4")
                   setTemperature(0.7)
                   setMaxTokens(2048)
                   setUseCallHistory(true)

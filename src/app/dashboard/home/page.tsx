@@ -32,7 +32,7 @@ export default function HomePage() {
           <CardHeader className="bg-primary/5">
             <CardTitle className="flex items-center gap-2">
               <span className="inline-block p-1 bg-primary text-white rounded-full">🎉</span>
-              What's the latest new update? - August 9, 2025 6:00 AM Update
+              What's the latest new update? - August 10, 2025 3:44 AM Update
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-6">
