@@ -169,28 +169,16 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
             isCollapsed={isCollapsed}
             children={[
               { 
-                href: "#", 
-                label: "AI X Accounts",
-                onClick: (e: React.MouseEvent) => {
-                  e.preventDefault();
-                  alert("Coming soon: Premium AI X account management services!");
-                }
+                href: "/dashboard/add-ons/x-accounts", 
+                label: "AI X Accounts"
               },
               { 
-                href: "#", 
-                label: "AI Instagram",
-                onClick: (e: React.MouseEvent) => {
-                  e.preventDefault();
-                  alert("Coming soon: AI-powered Instagram growth services!");
-                }
+                href: "/dashboard/add-ons/instagram", 
+                label: "AI Instagram"
               },
               { 
-                href: "#", 
-                label: "Custom AI Assistants",
-                onClick: (e: React.MouseEvent) => {
-                  e.preventDefault();
-                  alert("Coming soon: Personalized AI assistants tailored to your business needs!");
-                }
+                href: "/dashboard/add-ons/custom-assistants", 
+                label: "Custom AI Assistants"
               },
             ]}
           />
