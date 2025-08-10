@@ -221,6 +221,7 @@ export default function AskAIPage() {
   const handleNewChat = () => {
     setMessages([])
     setActiveChatSession(null)
+    setActiveTab("chat")
   }
   
   // Function to select a chat session
