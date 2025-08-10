@@ -116,6 +116,7 @@ export default function AskAIPage() {
   const [temperature, setTemperature] = useState(0.7)
   const [maxTokens, setMaxTokens] = useState(2048)
   const [useCallHistory, setUseCallHistory] = useState(true)
+  const [settingsApplied, setSettingsApplied] = useState(false)
   const [systemPrompt, setSystemPrompt] = useState(
     "You are an AI assistant for Callify, a platform that helps businesses automate their sales calls. " +
     "Provide helpful, accurate, and concise responses to user queries about sales strategies, call scripts, and business growth."
@@ -550,8 +551,13 @@ export default function AskAIPage() {
               >
                 Reset to Defaults
               </Button>
-              <Button onClick={() => setActiveTab("chat")}>
-                Apply Settings
+              <Button 
+                onClick={() => {
+                  setSettingsApplied(true);
+                  setTimeout(() => setSettingsApplied(false), 2000);
+                }}
+              >
+                {settingsApplied ? "Applied!" : "Apply Settings"}
               </Button>
             </CardFooter>
           </Card>
