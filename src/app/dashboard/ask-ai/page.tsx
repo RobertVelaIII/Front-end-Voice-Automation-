@@ -86,25 +86,12 @@ function ChatMessage({ message }: { message: ChatMessage }) {
       message.role === "user" ? "justify-end" : "justify-start"
     )}>
       <div className={cn(
-        "flex items-start gap-3 max-w-[80%]",
-        message.role === "user" ? "flex-row-reverse" : "flex-row"
+        "max-w-[80%]",
+        message.role === "user" ? "ml-auto" : "mr-auto"
       )}>
-        <Avatar className="h-8 w-8">
-          {message.role === "user" ? (
-            <>
-              <AvatarImage src="/avatars/user-avatar.png" />
-              <AvatarFallback className="bg-primary/10 text-primary"><User className="h-4 w-4" /></AvatarFallback>
-            </>
-          ) : (
-            <>
-              <AvatarImage src="/avatars/ai-avatar.png" />
-              <AvatarFallback className="bg-blue-500/10 text-blue-500"><Bot className="h-4 w-4" /></AvatarFallback>
-            </>
-          )}
-        </Avatar>
         <div className={cn(
           "rounded-lg px-4 py-2 text-sm",
-          message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+          message.role === "user" ? "bg-primary text-primary-foreground shadow-md border border-primary/20" : "bg-muted"
         )}>
           {message.content}
         </div>
