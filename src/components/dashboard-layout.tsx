@@ -36,7 +36,7 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
         {/* Desktop Sidebar */}
         <div 
           className={cn(
-            "hidden md:block shrink-0 border-r transition-all duration-300 sidebar-bg",
+            "hidden md:block shrink-0 border-r transition-all duration-300 sidebar-bg sticky top-0 h-screen",
             isSidebarCollapsed ? "w-20" : "w-64"
           )}
         >

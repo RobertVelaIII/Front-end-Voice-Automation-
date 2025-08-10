@@ -83,7 +83,7 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
           </Button>
         )}
       </div>
-      <div className="flex-1 px-4 overflow-y-auto max-h-[calc(100vh-8rem)]">
+      <div className="flex-1 px-4 overflow-y-auto max-h-[calc(100vh-8rem)] scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
         <nav className="space-y-1">
           <CollapsibleSidebarItem
             icon={<Home className="h-4 w-4" />}
