@@ -1,18 +1,8 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react"
 import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Bot, Send, Settings, History, Trash2, Download, User, Info, AlertCircle } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 // Types for chat messages
 type MessageRole = "user" | "assistant" | "system"
@@ -32,75 +22,37 @@ interface ChatSession {
   updatedAt: Date
 }
 
-// Mock data for chat history
-const mockChatSessions: ChatSession[] = [
+// Mock data for recent conversations
+const recentConversations = [
   {
     id: "1",
-    title: "Sales Script Optimization",
-    messages: [
-      {
-        id: "msg1",
-        role: "user",
-        content: "How can I improve my sales scripts?",
-        timestamp: new Date(Date.now() - 86400000) // 1 day ago
-      }
-    ],
-    createdAt: new Date(Date.now() - 86400000),
-    updatedAt: new Date(Date.now() - 86400000)
+    title: "Sales script for tech products",
+    timestamp: new Date(Date.now() - 7200000) // 2 hours ago
   },
   {
     id: "2",
-    title: "Customer Objection Handling",
-    messages: [
-      {
-        id: "msg2",
-        role: "user",
-        content: "What are effective ways to handle pricing objections?",
-        timestamp: new Date(Date.now() - 172800000) // 2 days ago
-      }
-    ],
-    createdAt: new Date(Date.now() - 172800000),
-    updatedAt: new Date(Date.now() - 172800000)
+    title: "Handling price objections",
+    timestamp: new Date(Date.now() - 86400000) // Yesterday
   },
   {
     id: "3",
-    title: "Call Analytics Review",
-    messages: [
-      {
-        id: "msg3",
-        role: "user",
-        content: "Can you analyze my call performance from last week?",
-        timestamp: new Date(Date.now() - 259200000) // 3 days ago
-      }
-    ],
-    createdAt: new Date(Date.now() - 259200000),
-    updatedAt: new Date(Date.now() - 259200000)
+    title: "Improving call metrics",
+    timestamp: new Date(Date.now() - 172800000) // 2 days ago
   }
 ]
 
-// Component for individual chat message
-function ChatMessage({ message }: { message: ChatMessage }) {
-  return (
-    <div className={cn(
-      "flex w-full mb-4 animate-in fade-in-0 slide-in-from-bottom-3 duration-300",
-      message.role === "user" ? "justify-end" : "justify-start"
-    )}>
-      <div className={cn(
-        "max-w-[80%]",
-        message.role === "user" ? "ml-auto" : "mr-auto"
-      )}>
-        <div className={cn(
-          "rounded-lg px-4 py-2 text-sm",
-          message.role === "user" ? "bg-primary text-primary-foreground shadow-md border border-primary/20" : "bg-muted"
-        )}>
-          {message.content}
-        </div>
-      </div>
-    </div>
-  )
+// Format relative time
+const formatRelativeTime = (date: Date) => {
+  const now = new Date()
+  const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
+  
+  if (diffInHours < 1) return "Just now"
+  if (diffInHours < 24) return `${diffInHours} ${diffInHours === 1 ? 'hour' : 'hours'} ago`
+  if (diffInHours < 48) return "Yesterday"
+  if (diffInHours < 72) return "2 days ago"
+  return new Date(date).toLocaleDateString()
 }
 
-// Main component
 export default function AskAIPage() {
   // State for active tab
   const [activeTab, setActiveTab] = useState("chat")
@@ -109,27 +61,6 @@ export default function AskAIPage() {
   const [inputMessage, setInputMessage] = useState("")
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [activeChatSession, setActiveChatSession] = useState<ChatSession | null>(null)
-  const [chatSessions, setChatSessions] = useState<ChatSession[]>(mockChatSessions)
-  
-  // State for settings
-  const [temperature, setTemperature] = useState(0.7)
-  const [maxTokens, setMaxTokens] = useState(2048)
-  const [useCallHistory, setUseCallHistory] = useState(true)
-  const [settingsApplied, setSettingsApplied] = useState(false)
-  const [systemPrompt, setSystemPrompt] = useState(
-    "You are an AI assistant for Callify, a platform that helps businesses automate their sales calls. " +
-    "Provide helpful, accurate, and concise responses to user queries about sales strategies, call scripts, and business growth."
-  )
-  
-  // Refs
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const chatContainerRef = useRef<HTMLDivElement>(null)
-  
-  // Scroll to bottom of chat when messages change
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
   
   // Function to handle sending a message
   const handleSendMessage = async () => {
@@ -149,25 +80,6 @@ export default function AskAIPage() {
     setIsLoading(true)
     
     try {
-      // TODO: Replace with actual API call to backend when it's built
-      // Using placeholder/mock implementation for now
-      // const response = await fetch('https://api.callify.ai/chat', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     message: inputMessage,
-      //     history: messages,
-      //     settings: {
-      //       model: selectedModel,
-      //       temperature,
-      //       maxTokens,
-      //       systemPrompt,
-      //       useCallHistory
-      //     }
-      //   })
-      // })
-      // const data = await response.json()
-      
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000))
       
@@ -181,71 +93,11 @@ export default function AskAIPage() {
       
       // Add assistant message to chat
       setMessages(prev => [...prev, assistantMessage])
-      
-      // Update or create chat session
-      if (!activeChatSession) {
-        const newSession: ChatSession = {
-          id: Date.now().toString(),
-          title: generateChatTitle(inputMessage),
-          messages: [userMessage, assistantMessage],
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
-        setChatSessions(prev => [newSession, ...prev])
-        setActiveChatSession(newSession)
-      } else {
-        const updatedSession = {
-          ...activeChatSession,
-          messages: [...activeChatSession.messages, userMessage, assistantMessage],
-          updatedAt: new Date()
-        }
-        setChatSessions(prev => prev.map(session => 
-          session.id === updatedSession.id ? updatedSession : session
-        ))
-        setActiveChatSession(updatedSession)
-      }
     } catch (error) {
       console.error("Error sending message:", error)
-      // Add error message
-      setMessages(prev => [...prev, {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: "Sorry, there was an error processing your request. Please try again later.",
-        timestamp: new Date()
-      }])
     } finally {
       setIsLoading(false)
     }
-  }
-  
-  // Function to start a new chat
-  const handleNewChat = () => {
-    setMessages([])
-    setActiveChatSession(null)
-    setActiveTab("chat")
-  }
-  
-  // Function to select a chat session
-  const handleSelectChatSession = (session: ChatSession) => {
-    setActiveChatSession(session)
-    setMessages(session.messages)
-    setActiveTab("chat")
-  }
-  
-  // Function to delete a chat session
-  const handleDeleteChatSession = (sessionId: string) => {
-    setChatSessions(prev => prev.filter(session => session.id !== sessionId))
-    if (activeChatSession?.id === sessionId) {
-      setActiveChatSession(null)
-      setMessages([])
-    }
-  }
-  
-  // Helper function to generate a chat title from the first message
-  const generateChatTitle = (message: string): string => {
-    // Take first 30 chars of message or up to the first period
-    const title = message.split(".")[0].substring(0, 30)
-    return title.length < message.length ? `${title}...` : title
   }
   
   // Helper function to get mock AI responses
@@ -263,323 +115,263 @@ export default function AskAIPage() {
     }
   }
 
+  // Function to set quick action message
+  const setQuickAction = (message: string) => {
+    setInputMessage(message)
+  }
+
   return (
-    <div className="container py-6 px-8">
-      <div className="flex items-center mb-6">
-        <h1 className="text-2xl font-bold">Ask AI Assistant</h1>
-      </div>
-      
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="flex justify-end mb-6">
-          <TabsList className="grid w-[400px] grid-cols-3">
-            <TabsTrigger value="chat" className="flex items-center gap-2">
-              <Bot className="h-4 w-4" />
-              <span>Chat</span>
-            </TabsTrigger>
-            <TabsTrigger value="history" className="flex items-center gap-2">
-              <History className="h-4 w-4" />
-              <span>History</span>
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              <span>Settings</span>
-            </TabsTrigger>
-          </TabsList>
+    <div className="min-h-[800px] bg-white">
+      {/* Header */}
+      <header className="border-b border-neutral-200 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <i className="fa-solid fa-robot text-2xl text-black mr-3"></i>
+              <h1 className="text-xl text-black">AI Assistant</h1>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button className="p-2 rounded-lg border border-neutral-300 hover:bg-neutral-50">
+                <i className="fa-solid fa-cog text-neutral-600"></i>
+              </button>
+              <img 
+                src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=456" 
+                alt="User Avatar" 
+                className="w-8 h-8 rounded-full"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Tabs Navigation */}
+        <div className="mb-8">
+          <div className="border-b border-neutral-200">
+            <nav className="flex space-x-8">
+              <button 
+                className={`py-2 px-1 border-b-2 ${activeTab === 'chat' ? 'border-black text-black' : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'} text-sm`}
+                onClick={() => setActiveTab('chat')}
+              >
+                <i className="fa-solid fa-comments mr-2"></i>
+                Chat History
+              </button>
+              <button 
+                className={`py-2 px-1 border-b-2 ${activeTab === 'settings' ? 'border-black text-black' : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'} text-sm`}
+                onClick={() => setActiveTab('settings')}
+              >
+                <i className="fa-solid fa-sliders mr-2"></i>
+                AI Settings
+              </button>
+              <button 
+                className={`py-2 px-1 border-b-2 ${activeTab === 'organizations' ? 'border-black text-black' : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'} text-sm`}
+                onClick={() => setActiveTab('organizations')}
+              >
+                <i className="fa-solid fa-building mr-2"></i>
+                Organizations
+              </button>
+            </nav>
+          </div>
         </div>
 
-        <TabsContent value="chat">
-          <Card className="border-0 shadow-none">
-            <CardContent className="p-0">
-              <div className="flex flex-col h-[calc(100vh-220px)]">
-                {/* Chat messages area */}
-                <div 
-                  ref={chatContainerRef}
-                  className="flex-1 overflow-y-auto p-4 space-y-4 bg-background rounded-t-lg"
-                >
-                  {messages.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center h-full text-center p-6">
-                      <div className="bg-primary/10 p-3 rounded-full mb-4">
-                        <Bot className="h-6 w-6 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-medium mb-2">How can I help you today?</h3>
-                      <p className="text-muted-foreground max-w-md">
-                        Ask me anything about sales strategies, call scripts, customer objections, or business growth.
-                      </p>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6 w-full max-w-md">
-                        <Button 
-                          variant="outline" 
-                          className="justify-start text-left" 
-                          onClick={() => setInputMessage("Help me create a sales script for cold calls")}
-                        >
-                          Create a sales script
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          className="justify-start text-left" 
-                          onClick={() => setInputMessage("How do I handle pricing objections?")}
-                        >
-                          Handle objections
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          className="justify-start text-left" 
-                          onClick={() => setInputMessage("What metrics should I track for my sales calls?")}
-                        >
-                          Track call metrics
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          className="justify-start text-left" 
-                          onClick={() => setInputMessage("Give me tips to improve my closing rate")}
-                        >
-                          Improve closing rate
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {messages.map((message) => (
-                        <ChatMessage key={message.id} message={message} />
-                      ))}
-                      {isLoading && (
-                        <div className="flex items-center gap-2 text-muted-foreground animate-pulse">
-                          <div className="bg-blue-500/10 p-2 rounded-full">
-                            <Bot className="h-4 w-4 text-blue-500" />
-                          </div>
-                          <span>AI is thinking...</span>
-                        </div>
-                      )}
-                      <div ref={messagesEndRef} />
-                    </>
-                  )}
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Chat Interface */}
+          <div className="lg:col-span-2">
+            <div className="bg-white border border-neutral-200 rounded-lg shadow-sm h-[600px] flex flex-col">
+              {/* Chat Header */}
+              <div className="flex items-center justify-between p-4 border-b border-neutral-200">
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-3">
+                    <i className="fa-solid fa-robot text-white text-sm"></i>
+                  </div>
+                  <span className="text-black">AI Assistant</span>
                 </div>
-                
-                {/* Input area */}
-                <div className="p-4 border-t bg-background rounded-b-lg">
-                  <form 
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      handleSendMessage()
-                    }}
-                    className="flex items-end gap-2"
-                  >
-                    <div className="relative flex-1">
-                      <Input
-                        placeholder="Type your message..."
-                        value={inputMessage}
-                        onChange={(e) => setInputMessage(e.target.value)}
-                        className="pr-10"
-                      />
-                    </div>
-                    <Button 
-                      type="submit" 
-                      size="icon" 
-                      disabled={!inputMessage.trim() || isLoading}
-                    >
-                      <Send className="h-4 w-4" />
-                    </Button>
-
-                  </form>
-                  <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
-                    <Info className="h-3 w-3" />
-                    <span>
-                      AI responses are generated based on your settings and may not always be accurate.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="history">
-          <Card>
-            <CardHeader>
-              <CardTitle>Chat History</CardTitle>
-              <CardDescription>
-                View and manage your previous conversations with the AI assistant.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {chatSessions.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground">No chat history yet</p>
-                </div>
-              ) : (
-                <ScrollArea className="h-[calc(100vh-350px)]">
-                  <div className="space-y-2">
-                    {chatSessions.map((session) => (
-                      <div 
-                        key={session.id} 
-                        className={cn(
-                          "flex items-center justify-between p-3 rounded-md hover:bg-muted cursor-pointer",
-                          activeChatSession?.id === session.id && "bg-muted"
-                        )}
-                        onClick={() => handleSelectChatSession(session)}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="bg-primary/10 p-2 rounded-full">
-                            <Bot className="h-4 w-4 text-primary" />
-                          </div>
-                          <div>
-                            <p className="font-medium">{session.title}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {new Date(session.updatedAt).toLocaleDateString()} · {session.messages.length} messages
-                            </p>
-                          </div>
-                        </div>
-                        <Button 
-                          variant="ghost" 
-                          size="icon"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDeleteChatSession(session.id)
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea>
-              )}
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button 
-                variant="outline" 
-                className="w-full" 
-                onClick={handleNewChat}
-              >
-                New Chat
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="settings">
-          <Card>
-            <CardHeader>
-              <CardTitle>AI Assistant Settings</CardTitle>
-              <CardDescription>
-                Customize how the AI assistant responds to your queries.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="temperature">Creativity</Label>
-                    <span className="text-sm text-muted-foreground">{temperature.toFixed(1)}</span>
-                  </div>
-                  <input
-                    id="temperature"
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.1"
-                    value={temperature}
-                    onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Precise</span>
-                    <span>Creative</span>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="max-tokens">Response Length</Label>
-                    <span className="text-sm text-muted-foreground">{maxTokens}</span>
-                  </div>
-                  <input
-                    id="max-tokens"
-                    type="range"
-                    min="256"
-                    max="4096"
-                    step="256"
-                    value={maxTokens}
-                    onChange={(e) => setMaxTokens(parseInt(e.target.value))}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Shorter</span>
-                    <span>Longer</span>
-                  </div>
-                </div>
-
                 <div className="flex items-center space-x-2">
-                  <Switch 
-                    id="use-call-history" 
-                    checked={useCallHistory}
-                    onCheckedChange={setUseCallHistory}
-                  />
-                  <Label htmlFor="use-call-history">Include call history in context</Label>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  When enabled, the AI will have access to your call history data to provide more personalized responses.
-                </p>
-
-                <div className="space-y-2">
-                  <Label htmlFor="system-prompt">System Prompt</Label>
-                  <Textarea
-                    id="system-prompt"
-                    value={systemPrompt}
-                    onChange={(e) => setSystemPrompt(e.target.value)}
-                    rows={4}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    This prompt guides how the AI responds to your queries. Edit with caution.
-                  </p>
+                  <span className="w-2 h-2 bg-neutral-500 rounded-full"></span>
+                  <span className="text-sm text-neutral-500">Online</span>
                 </div>
               </div>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setTemperature(0.7)
-                  setMaxTokens(2048)
-                  setUseCallHistory(true)
-                  setSystemPrompt(
-                    "You are an AI assistant for Callify, a platform that helps businesses automate their sales calls. " +
-                    "Provide helpful, accurate, and concise responses to user queries about sales strategies, call scripts, and business growth."
-                  )
-                }}
-              >
-                Reset to Defaults
-              </Button>
-              <Button 
-                onClick={() => {
-                  setSettingsApplied(true);
-                  setTimeout(() => setSettingsApplied(false), 2000);
-                }}
-              >
-                {settingsApplied ? "Applied!" : "Apply Settings"}
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
 
-      {/* Firebase integration comment */}
-      {/* 
-        TODO: Firebase Integration
-        1. Create Firestore collections:
-           - 'chatSessions': Store chat session metadata
-           - 'chatMessages': Store individual messages with references to sessions
-           - 'userSettings': Store user-specific AI settings
-        
-        2. Add authentication checks to ensure users only access their own data
-        
-        3. Implement real-time updates using Firebase listeners
-        
-        4. Set up security rules to protect data:
-           - Only authenticated users can read/write their own data
-           - Admins can access all data for support purposes
-      */}
+              {/* Chat Messages */}
+              <div className="flex-1 p-4 overflow-y-auto space-y-4">
+                {/* AI Initial Message */}
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <i className="fa-solid fa-robot text-white text-sm"></i>
+                  </div>
+                  <div className="bg-neutral-100 rounded-lg p-3 max-w-md">
+                    <p className="text-sm text-neutral-900">How can I help you today? Ask me anything about sales strategies, call scripts, customer objections, or business growth.</p>
+                    <span className="text-xs text-neutral-500 mt-1 block">Just now</span>
+                  </div>
+                </div>
+
+                {/* Render messages */}
+                {messages.map((message) => (
+                  <div key={message.id} className={`flex items-start ${message.role === 'user' ? 'justify-end' : ''}`}>
+                    {message.role === 'assistant' && (
+                      <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                        <i className="fa-solid fa-robot text-white text-sm"></i>
+                      </div>
+                    )}
+                    <div className={`rounded-lg p-3 max-w-md ${message.role === 'user' ? 'bg-black text-white' : 'bg-neutral-100 text-neutral-900'}`}>
+                      <p className="text-sm">{message.content}</p>
+                      <span className="text-xs mt-1 block" style={{ color: message.role === 'user' ? 'rgba(255,255,255,0.7)' : 'var(--color-neutral-500)' }}>
+                        {formatRelativeTime(message.timestamp)}
+                      </span>
+                    </div>
+                    {message.role === 'user' && (
+                      <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center ml-3 flex-shrink-0">
+                        <i className="fa-solid fa-user text-neutral-500 text-sm"></i>
+                      </div>
+                    )}
+                  </div>
+                ))}
+
+                {/* Loading indicator */}
+                {isLoading && (
+                  <div className="flex items-start">
+                    <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                      <i className="fa-solid fa-robot text-white text-sm"></i>
+                    </div>
+                    <div className="bg-neutral-100 rounded-lg p-3 max-w-md">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Message Input */}
+              <div className="p-4 border-t border-neutral-200">
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    handleSendMessage()
+                  }}
+                  className="flex space-x-2"
+                >
+                  <Input
+                    type="text"
+                    placeholder="Type your message..."
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    className="flex-1 px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={!inputMessage.trim() || isLoading}
+                    className="px-4 py-2 bg-black text-white rounded-lg hover:bg-neutral-800 disabled:bg-neutral-300"
+                  >
+                    <i className="fa-solid fa-paper-plane"></i>
+                  </Button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Actions Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white border border-neutral-200 rounded-lg shadow-sm p-6">
+              <h3 className="text-lg text-black mb-4">Quick Actions</h3>
+              
+              <div className="space-y-3">
+                <button 
+                  className="w-full text-left p-4 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
+                  onClick={() => setQuickAction("Help me create a sales script for cold calls")}
+                >
+                  <div className="flex items-center">
+                    <i className="fa-solid fa-file-lines text-neutral-600 mr-3"></i>
+                    <div>
+                      <div className="text-black">Create a Sales Script</div>
+                      <div className="text-sm text-neutral-500">Generate custom scripts for your calls</div>
+                    </div>
+                  </div>
+                </button>
+
+                <button 
+                  className="w-full text-left p-4 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
+                  onClick={() => setQuickAction("How do I handle pricing objections?")}
+                >
+                  <div className="flex items-center">
+                    <i className="fa-solid fa-shield-halved text-neutral-600 mr-3"></i>
+                    <div>
+                      <div className="text-black">Handle Objections</div>
+                      <div className="text-sm text-neutral-500">Learn to overcome customer objections</div>
+                    </div>
+                  </div>
+                </button>
+
+                <button 
+                  className="w-full text-left p-4 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
+                  onClick={() => setQuickAction("What metrics should I track for my sales calls?")}
+                >
+                  <div className="flex items-center">
+                    <i className="fa-solid fa-chart-line text-neutral-600 mr-3"></i>
+                    <div>
+                      <div className="text-black">Track Call Metrics</div>
+                      <div className="text-sm text-neutral-500">Monitor your call performance</div>
+                    </div>
+                  </div>
+                </button>
+
+                <button 
+                  className="w-full text-left p-4 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
+                  onClick={() => setQuickAction("Give me tips to improve my closing rate")}
+                >
+                  <div className="flex items-center">
+                    <i className="fa-solid fa-bullseye text-neutral-600 mr-3"></i>
+                    <div>
+                      <div className="text-black">Improve Closing Rate</div>
+                      <div className="text-sm text-neutral-500">Tips to close more deals</div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
+              {/* Ask AI Button */}
+              <div className="mt-6 pt-6 border-t border-neutral-200">
+                <Button 
+                  className="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-neutral-800 transition-colors"
+                  onClick={() => setQuickAction("")}
+                >
+                  <i className="fa-solid fa-comments mr-2"></i>
+                  Ask AI Anything
+                </Button>
+              </div>
+            </div>
+
+            {/* Recent Conversations */}
+            <div className="bg-white border border-neutral-200 rounded-lg shadow-sm p-6 mt-6">
+              <h3 className="text-lg text-black mb-4">Recent Conversations</h3>
+              
+              <div className="space-y-3">
+                {recentConversations.map((conversation) => (
+                  <div 
+                    key={conversation.id}
+                    className="p-3 border border-neutral-100 rounded-lg hover:bg-neutral-50 cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm text-black truncate">{conversation.title}</p>
+                        <p className="text-xs text-neutral-500">{formatRelativeTime(conversation.timestamp)}</p>
+                      </div>
+                      <i className="fa-solid fa-chevron-right text-neutral-400"></i>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <button className="w-full mt-4 text-sm text-neutral-500 hover:text-black transition-colors">
+                View All Conversations
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   )
 }

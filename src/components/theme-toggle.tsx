@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import { useThemeToggle } from "@/hooks/use-theme"
 import { cn } from "@/lib/utils"
 
 /**
@@ -10,19 +10,19 @@ import { cn } from "@/lib/utils"
  * Switches between light and dark mode
  */
 export function ThemeToggle({ className }: { className?: string }) {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
+  const { theme, setTheme, mounted } = useThemeToggle()
   
-  // After mounting, we can safely show the UI
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
+  // No need for mounted state as it's provided by the hook
 
   // Toggle theme function with event handling
   const handleToggleTheme = (e: React.MouseEvent) => {
     // Stop event propagation to prevent it from closing the mobile menu
     e.stopPropagation()
+    // Toggle between light and dark mode
     setTheme(theme === "dark" ? "light" : "dark")
+    // Force apply theme to ensure it propagates globally
+    document.documentElement.classList.remove('light', 'dark')
+    document.documentElement.classList.add(theme === "dark" ? "light" : "dark")
   }
 
   // Prevent hydration mismatch

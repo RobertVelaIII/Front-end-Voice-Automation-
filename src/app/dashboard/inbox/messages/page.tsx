@@ -1,130 +1,214 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { MessageSquare, ArrowLeft, Search, User } from "lucide-react"
-import Link from "next/link"
-import { useState } from "react"
+import { useState } from 'react'
 
 export default function MessagesPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  
-  const messages = [
-    {
-      id: 1,
-      sender: "John Smith",
-      preview: "Hi there! I wanted to follow up on our call yesterday. Do you have time to discuss the proposal?",
-      time: "1 hour ago",
-      unread: true,
-    },
-    {
-      id: 2,
-      sender: "Sarah Johnson",
-      preview: "Thanks for the information. I'll review it and get back to you with my thoughts by tomorrow.",
-      time: "3 hours ago",
-      unread: true,
-    },
-    {
-      id: 3,
-      sender: "Michael Brown",
-      preview: "I'm interested in scheduling another call next week. What's your availability?",
-      time: "Yesterday",
-      unread: false,
-    },
-    {
-      id: 4,
-      sender: "Emily Davis",
-      preview: "The presentation looks great! I've shared it with my team and they're impressed.",
-      time: "2 days ago",
-      unread: false,
-    },
-    {
-      id: 5,
-      sender: "David Wilson",
-      preview: "Can you send me the updated pricing information? I need it for my meeting tomorrow.",
-      time: "3 days ago",
-      unread: false,
-    },
-  ]
-
-  const filteredMessages = messages.filter(message => 
-    message.sender.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    message.preview.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/dashboard/inbox">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
-        <h1 className="text-3xl font-bold tracking-tight">Direct Messages</h1>
-      </div>
-
-      <div className="flex justify-between items-center">
-        <p className="text-muted-foreground">
-          You have {messages.filter(m => m.unread).length} unread messages
-        </p>
-        <div className="relative w-full max-w-sm">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search messages..."
-            className="w-full pl-8"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+    <div className="h-full text-base-content">
+      <header className="bg-white border-b border-neutral-200 px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-neutral-800 rounded flex items-center justify-center">
+                <i className="fa-solid fa-comments text-white text-sm"></i>
+              </div>
+              <h1 className="text-xl text-neutral-900">Messages</h1>
+            </div>
+            <div className="flex items-center space-x-2 bg-neutral-100 px-3 py-1 rounded-full">
+              <span className="w-2 h-2 bg-neutral-500 rounded-full"></span>
+              <span className="text-sm text-neutral-700">3 unread</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <select className="appearance-none bg-white border border-neutral-300 rounded-lg px-4 py-2 pr-8 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-400">
+                <option>Acme Corp</option>
+                <option>TechStart Inc</option>
+                <option>Global Solutions</option>
+              </select>
+              <i className="fa-solid fa-chevron-down absolute right-3 top-3 text-neutral-400 text-xs pointer-events-none"></i>
+            </div>
+            
+            <button className="bg-neutral-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-neutral-800 flex items-center space-x-2">
+              <i className="fa-solid fa-plus text-xs"></i>
+              <span>New Message</span>
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>All Messages</CardTitle>
-          <CardDescription>
-            View and respond to your direct messages
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {filteredMessages.length > 0 ? (
-            filteredMessages.map((message) => (
-              <div 
-                key={message.id} 
-                className={`rounded-md border p-4 cursor-pointer hover:bg-accent/50 transition-colors ${message.unread ? 'border-primary' : ''}`}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="rounded-full bg-primary/10 p-2">
-                    <User className="h-4 w-4 text-primary" />
+      <main className="flex h-[calc(100vh-80px)]">
+        <aside className="w-80 bg-white border-r border-neutral-200 flex flex-col">
+          <div className="p-4 border-b border-neutral-200">
+            <div className="relative">
+              <i className="fa-solid fa-search absolute left-3 top-3 text-neutral-400 text-sm"></i>
+              <input type="text" placeholder="Search messages..." className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-neutral-400" />
+            </div>
+          </div>
+          
+          <div className="p-4 border-b border-neutral-200">
+            <div className="flex space-x-1">
+              <button className="px-3 py-1 bg-neutral-900 text-white text-sm rounded-full">All</button>
+              <button className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm rounded-full hover:bg-neutral-200">Unread</button>
+              <button className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm rounded-full hover:bg-neutral-200">Groups</button>
+            </div>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-2 space-y-1">
+              <div className="flex items-center p-3 hover:bg-neutral-50 rounded-lg cursor-pointer bg-neutral-50 border-l-4 border-neutral-900">
+                <div className="relative">
+                  <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=1234" alt="Avatar" className="w-10 h-10 rounded-full" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-neutral-500 rounded-full border-2 border-white"></span>
+                </div>
+                <div className="ml-3 flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-neutral-900 truncate">Sarah Johnson</p>
+                    <span className="text-xs text-neutral-500">2m</span>
                   </div>
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium leading-none">
-                        {message.sender}
-                        {message.unread && (
-                          <span className="ml-2 h-2 w-2 rounded-full bg-primary inline-block" />
-                        )}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {message.time}
-                      </p>
-                    </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {message.preview}
-                    </p>
-                  </div>
+                  <p className="text-sm text-neutral-600 truncate">Can we schedule a call for tomorrow?</p>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="text-center py-6">
-              <MessageSquare className="h-8 w-8 mx-auto text-muted-foreground" />
-              <p className="mt-2 text-muted-foreground">No messages found</p>
+              
+              <div className="flex items-center p-3 hover:bg-neutral-50 rounded-lg cursor-pointer">
+                <div className="relative">
+                  <div className="w-10 h-10 bg-neutral-600 rounded-full flex items-center justify-center">
+                    <i className="fa-solid fa-users text-white text-sm"></i>
+                  </div>
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-neutral-500 rounded-full border-2 border-white"></span>
+                </div>
+                <div className="ml-3 flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-neutral-900 truncate">Marketing Team</p>
+                    <span className="text-xs text-neutral-500">15m</span>
+                  </div>
+                  <p className="text-sm text-neutral-600 truncate">John: The campaign results are ready</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center p-3 hover:bg-neutral-50 rounded-lg cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=5678" alt="Avatar" className="w-10 h-10 rounded-full" />
+                <div className="ml-3 flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-neutral-900 truncate">Mike Chen</p>
+                    <span className="text-xs text-neutral-500">1h</span>
+                  </div>
+                  <p className="text-sm text-neutral-500 truncate">Thanks for the update!</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center p-3 hover:bg-neutral-50 rounded-lg cursor-pointer">
+                <div className="w-10 h-10 bg-neutral-500 rounded-full flex items-center justify-center">
+                  <i className="fa-solid fa-users text-white text-sm"></i>
+                </div>
+                <div className="ml-3 flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-neutral-900 truncate">Development Team</p>
+                    <span className="text-xs text-neutral-500">3h</span>
+                  </div>
+                  <p className="text-sm text-neutral-500 truncate">Lisa: Code review completed</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center p-3 hover:bg-neutral-50 rounded-lg cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=9012" alt="Avatar" className="w-10 h-10 rounded-full" />
+                <div className="ml-3 flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-neutral-900 truncate">Emma Wilson</p>
+                    <span className="text-xs text-neutral-500">5h</span>
+                  </div>
+                  <p className="text-sm text-neutral-500 truncate">Perfect, let's move forward with this</p>
+                </div>
+              </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+          
+          <div className="p-4 border-t border-neutral-200">
+            <button className="w-full bg-neutral-100 text-neutral-700 py-2 px-4 rounded-lg text-sm hover:bg-neutral-200 flex items-center justify-center space-x-2">
+              <i className="fa-solid fa-users text-sm"></i>
+              <span>Create Group</span>
+            </button>
+          </div>
+        </aside>
+        
+        <section className="flex-1 flex flex-col">
+          <div className="bg-white border-b border-neutral-200 p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=1234" alt="Avatar" className="w-10 h-10 rounded-full" />
+                <div>
+                  <h2 className="text-lg text-neutral-900">Sarah Johnson</h2>
+                  <p className="text-sm text-neutral-600 flex items-center">
+                    <span className="w-2 h-2 bg-neutral-500 rounded-full mr-2"></span>
+                    Online
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <button className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg">
+                  <i className="fa-solid fa-phone"></i>
+                </button>
+                <button className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg">
+                  <i className="fa-solid fa-video"></i>
+                </button>
+                <button className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg">
+                  <i className="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto p-4 bg-neutral-50">
+            <div className="space-y-4">
+              <div className="text-center">
+                <span className="bg-white px-3 py-1 rounded-full text-xs text-neutral-500 border">Today</span>
+              </div>
+              
+              <div className="flex items-start space-x-3">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=1234" alt="Avatar" className="w-8 h-8 rounded-full" />
+                <div className="bg-white p-3 rounded-lg shadow-sm max-w-sm">
+                  <p className="text-sm text-neutral-900">Hi! I wanted to follow up on our previous conversation about the project timeline.</p>
+                  <span className="text-xs text-neutral-500 mt-1 block">10:30 AM</span>
+                </div>
+              </div>
+              
+              <div className="flex items-start justify-end space-x-3">
+                <div className="bg-neutral-900 text-white p-3 rounded-lg shadow-sm max-w-sm">
+                  <p className="text-sm">Sure! I've reviewed the requirements and I think we can deliver by next Friday.</p>
+                  <span className="text-xs text-neutral-300 mt-1 block">10:32 AM</span>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=1234" alt="Avatar" className="w-8 h-8 rounded-full" />
+                <div className="bg-white p-3 rounded-lg shadow-sm max-w-sm">
+                  <p className="text-sm text-neutral-900">That sounds great! Can we schedule a call for tomorrow to discuss the details?</p>
+                  <span className="text-xs text-neutral-500 mt-1 block">10:35 AM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white border-t border-neutral-200 p-4">
+            <div className="flex items-center space-x-3">
+              <button className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg">
+                <i className="fa-solid fa-paperclip"></i>
+              </button>
+              <div className="flex-1 relative">
+                <input type="text" placeholder="Type a message..." className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400 pr-12" />
+                <button className="absolute right-3 top-3 text-neutral-500 hover:text-neutral-700">
+                  <i className="fa-regular fa-face-smile"></i>
+                </button>
+              </div>
+              <button className="bg-neutral-900 text-white p-3 rounded-lg hover:bg-neutral-800">
+                <i className="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   )
 }

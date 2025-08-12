@@ -1,536 +1,288 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckCircle, Bot, ShoppingCart, MessageSquare, Code, Database, Store } from "lucide-react";
-
 export default function CustomAIAssistantsPage() {
   return (
-    <div className="container mx-auto p-6">
-      {/* Hero Section */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Custom AI Assistants</h1>
-        <p className="text-muted-foreground">
-          Intelligent, 24/7 AI assistants tailored to your business needs
-        </p>
+    <div className="h-full text-base-content">
+      <div id="header" className="bg-white border-b border-neutral-200 px-6 py-4">
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-neutral-800 rounded"></div>
+            <span className="text-xl text-neutral-900">AI Assistant Platform</span>
+          </div>
+          <nav className="hidden md:flex items-center space-x-8">
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Features</span>
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Integration</span>
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Pricing</span>
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Contact</span>
+          </nav>
+          <div className="flex items-center space-x-4">
+            <button className="px-4 py-2 text-neutral-600 hover:text-neutral-900">Sign In</button>
+            <button className="px-4 py-2 bg-neutral-900 text-white rounded-md hover:bg-neutral-800">Get Started</button>
+          </div>
+        </div>
       </div>
 
-      {/* Overview Card */}
-      <Card className="mb-8 bg-gradient-to-r from-violet-600 to-indigo-700 text-white">
-        <CardHeader>
-          <CardTitle className="text-2xl">Transform Your Customer Experience</CardTitle>
-          <CardDescription className="text-blue-100">
-            AI assistants that understand your products, inventory, and customers
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="mb-4">
-            Our custom AI assistants integrate seamlessly with your existing systems to provide 24/7 customer service, 
-            product recommendations, and inventory management. Whether you run a brick-and-mortar store or an e-commerce 
-            platform, our AI solutions can help you deliver exceptional customer experiences around the clock.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-              <div className="flex items-center mb-2">
-                <ShoppingCart className="h-5 w-5 mr-2" />
-                <h3 className="font-semibold">Product Knowledge</h3>
+      <main id="main-content">
+        <section id="hero" className="bg-neutral-50 px-6 py-20 h-[600px] flex items-center">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h1 className="text-5xl text-neutral-900 mb-6">Intelligent 24/7 AI Customer Support</h1>
+                <p className="text-xl text-neutral-600 mb-8">Transform your customer service with AI systems tailored for your business needs. Product knowledge, inventory integration, and seamless support.</p>
+                <div className="flex space-x-4">
+                  <button className="px-6 py-3 bg-neutral-900 text-white rounded-md hover:bg-neutral-800">Schedule Demo</button>
+                  <button className="px-6 py-3 border border-neutral-300 text-neutral-700 rounded-md hover:bg-neutral-50">Get Started</button>
+                </div>
               </div>
-              <p className="text-sm">
-                AI that understands your entire product catalog and can make intelligent recommendations.
-              </p>
-            </div>
-            <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-              <div className="flex items-center mb-2">
-                <MessageSquare className="h-5 w-5 mr-2" />
-                <h3 className="font-semibold">24/7 Support</h3>
+              <div className="bg-neutral-300 h-[400px] rounded-lg flex items-center justify-center">
+                <span className="text-white text-lg">AI Assistant Dashboard</span>
               </div>
-              <p className="text-sm">
-                Always-on customer service that handles inquiries, troubleshooting, and support tickets.
-              </p>
-            </div>
-            <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-              <div className="flex items-center mb-2">
-                <Database className="h-5 w-5 mr-2" />
-                <h3 className="font-semibold">Inventory Integration</h3>
-              </div>
-              <p className="text-sm">
-                Real-time inventory awareness to provide accurate availability information to customers.
-              </p>
             </div>
           </div>
-        </CardContent>
-        <CardFooter>
-          <Button className="bg-white text-indigo-700 hover:bg-indigo-50">Get Started</Button>
-        </CardFooter>
-      </Card>
+        </section>
 
-      {/* Use Cases Tabs */}
-      <h2 className="text-2xl font-bold mb-6">AI Assistant Solutions</h2>
-      <Tabs defaultValue="ecommerce" className="mb-8">
-        <TabsList className="grid w-full grid-cols-1 md:grid-cols-3">
-          <TabsTrigger value="ecommerce">E-commerce</TabsTrigger>
-          <TabsTrigger value="retail">Retail Stores</TabsTrigger>
-          <TabsTrigger value="service">Service Businesses</TabsTrigger>
-        </TabsList>
-        <TabsContent value="ecommerce" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <ShoppingCart className="h-5 w-5 mr-2" />
-                E-commerce AI Assistant
-              </CardTitle>
-              <CardDescription>
-                Enhance your online store with intelligent product recommendations and 24/7 customer support
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-lg font-semibold mb-3">Key Features</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Product catalog integration with real-time inventory awareness</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Personalized product recommendations based on browsing history</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Order status tracking and shipping information</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Return and exchange policy assistance</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Seamless handoff to human agents when needed</span>
-                    </li>
-                  </ul>
+        <section id="features" className="px-6 py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl text-neutral-900 mb-4">Key Features for E-commerce AI Assistants</h2>
+              <p className="text-lg text-neutral-600">Comprehensive solutions for retail stores, e-commerce, and service businesses</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white border border-neutral-200 rounded-lg p-6">
+                <div className="w-12 h-12 bg-neutral-800 rounded-lg flex items-center justify-center mb-4">
+                  <i className="fa-solid fa-shopping-cart text-white"></i>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-3">Integration Options</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Website chat widget with customizable appearance</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Shopify, WooCommerce, and Magento plugins</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>API integration for custom e-commerce platforms</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Email and SMS support channels</span>
-                    </li>
-                  </ul>
-                </div>
+                <h3 className="text-xl text-neutral-900 mb-3">Product Catalog Integration</h3>
+                <p className="text-neutral-600">Real-time inventory awareness and personalized product recommendations based on browsing history</p>
               </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Learn More</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="retail" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Store className="h-5 w-5 mr-2" />
-                Retail Store AI Assistant
-              </CardTitle>
-              <CardDescription>
-                Enhance in-store experiences and provide 24/7 support for brick-and-mortar businesses
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-lg font-semibold mb-3">Key Features</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>In-store kiosk integration for customer self-service</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Store inventory management and location assistance</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Phone system integration for after-hours support</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Appointment scheduling and management</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Customer loyalty program management</span>
-                    </li>
-                  </ul>
+              <div className="bg-white border border-neutral-200 rounded-lg p-6">
+                <div className="w-12 h-12 bg-neutral-800 rounded-lg flex items-center justify-center mb-4">
+                  <i className="fa-solid fa-truck text-white"></i>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-3">Integration Options</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>POS system integration (Square, Shopify POS, etc.)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Interactive kiosk software</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>VoIP phone system integration</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Mobile app integration for store associates</span>
-                    </li>
-                  </ul>
-                </div>
+                <h3 className="text-xl text-neutral-900 mb-3">Order Tracking</h3>
+                <p className="text-neutral-600">Order status tracking, shipment information, and return &amp; exchange policy support</p>
               </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Learn More</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="service" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <MessageSquare className="h-5 w-5 mr-2" />
-                Service Business AI Assistant
-              </CardTitle>
-              <CardDescription>
-                Streamline customer interactions and appointment scheduling for service-based businesses
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-lg font-semibold mb-3">Key Features</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>24/7 appointment booking and rescheduling</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Service catalog knowledge and pricing information</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Automated follow-ups and reminders</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>FAQ handling and common troubleshooting</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Customer feedback collection and analysis</span>
-                    </li>
-                  </ul>
+              <div className="bg-white border border-neutral-200 rounded-lg p-6">
+                <div className="w-12 h-12 bg-neutral-800 rounded-lg flex items-center justify-center mb-4">
+                  <i className="fa-solid fa-headset text-white"></i>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-3">Integration Options</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Calendar systems (Google Calendar, Outlook, etc.)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>CRM integration (Salesforce, HubSpot, etc.)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>Website chat widget and contact forms</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span>SMS and email communication channels</span>
-                    </li>
-                  </ul>
-                </div>
+                <h3 className="text-xl text-neutral-900 mb-3">Seamless Handoff</h3>
+                <p className="text-neutral-600">Smooth transition to human agents when needed with full conversation context</p>
               </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Learn More</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            </div>
+          </div>
+        </section>
 
-      {/* Integration Section */}
-      <h2 className="text-2xl font-bold mb-6">Seamless Integration</h2>
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>How Our AI Assistants Integrate With Your Business</CardTitle>
-          <CardDescription>
-            Multiple integration options to fit your existing systems and workflows
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center">
-                  <Code className="h-5 w-5 mr-2" />
-                  Website Integration
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">Our AI assistants can be embedded directly into your website with just a few lines of code. The chat widget is fully customizable to match your brand's look and feel.</p>
-                <div className="bg-muted p-3 rounded-md text-sm font-mono overflow-x-auto">
-                  {`<script src="https://callify.ai/widget.js" 
-  data-api-key="YOUR_API_KEY"
-  data-theme="light">
-</script>`}
+        <section id="integration" className="bg-neutral-50 px-6 py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl text-neutral-900 mb-4">Multiple Integration Options</h2>
+              <p className="text-lg text-neutral-600">Fit seamlessly into your existing systems and workflows</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white border border-neutral-200 rounded-lg p-8">
+                <div className="w-16 h-16 bg-neutral-800 rounded-lg flex items-center justify-center mb-6">
+                  <i className="fa-solid fa-code text-white text-xl"></i>
                 </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center">
-                  <Database className="h-5 w-5 mr-2" />
-                  API Integration
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">Connect your existing systems directly to our AI platform using our comprehensive API. Sync product data, inventory, and customer information in real-time.</p>
-                <ul className="space-y-1 text-sm">
-                  <li>• REST and GraphQL endpoints</li>
-                  <li>• Webhook support for events</li>
-                  <li>• SDKs for popular languages</li>
-                  <li>• Detailed documentation</li>
+                <h3 className="text-xl text-neutral-900 mb-4">Website Integration</h3>
+                <p className="text-neutral-600 mb-4">Embed directly into your website with just a few lines of code. Fully customizable chat widget to match your brand.</p>
+                <ul className="text-sm text-neutral-500 space-y-2">
+                  <li>• Custom appearance</li>
+                  <li>• Secure backend hosting</li>
+                  <li>• Quick implementation</li>
                 </ul>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center">
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Platform Plugins
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">One-click installation for popular e-commerce and CMS platforms. Our plugins handle all the technical details for you.</p>
-                <ul className="space-y-1 text-sm">
-                  <li>• Shopify App</li>
-                  <li>• WooCommerce Plugin</li>
-                  <li>• WordPress Plugin</li>
-                  <li>• Magento Extension</li>
-                  <li>• Square Integration</li>
+              </div>
+              <div className="bg-white border border-neutral-200 rounded-lg p-8">
+                <div className="w-16 h-16 bg-neutral-800 rounded-lg flex items-center justify-center mb-6">
+                  <i className="fa-solid fa-plug text-white text-xl"></i>
+                </div>
+                <h3 className="text-xl text-neutral-900 mb-4">API Integration</h3>
+                <p className="text-neutral-600 mb-4">Custom e-commerce platforms with full API access and email/SMS support channels.</p>
+                <ul className="text-sm text-neutral-500 space-y-2">
+                  <li>• RESTful API</li>
+                  <li>• Multi-channel support</li>
+                  <li>• Custom endpoints</li>
                 </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Subscription Model Section */}
-      <h2 className="text-2xl font-bold mb-6">Subscription-Based Service</h2>
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>How Our Subscription Model Works</CardTitle>
-          <CardDescription>
-            Flexible, subscription-based pricing with no long-term commitments
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-start">
-              <div className="bg-primary/10 p-2 rounded-full mr-4">
-                <Bot className="h-5 w-5 text-primary" />
               </div>
-              <div>
-                <h3 className="font-semibold">Monthly Access</h3>
-                <p className="text-muted-foreground">
-                  Our AI assistants are provided on a monthly subscription basis. When your subscription is active, 
-                  your AI assistant is fully functional. If you cancel, the AI assistant will no longer be available.
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-start">
-              <div className="bg-primary/10 p-2 rounded-full mr-4">
-                <Database className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold">Secure Data Handling</h3>
-                <p className="text-muted-foreground">
-                  Your product data and customer interactions are securely stored in our cloud infrastructure. 
-                  When your subscription is active, your AI has full access to this data to provide intelligent assistance.
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-start">
-              <div className="bg-primary/10 p-2 rounded-full mr-4">
-                <Code className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold">Integration Lifecycle</h3>
-                <p className="text-muted-foreground">
-                  Our integration code and plugins only function with an active subscription. When your subscription ends, 
-                  the AI assistant widget will automatically be removed from your website or display a reactivation message.
-                </p>
+              <div className="bg-white border border-neutral-200 rounded-lg p-8">
+                <div className="w-16 h-16 bg-neutral-800 rounded-lg flex items-center justify-center mb-6">
+                  <i className="fa-solid fa-puzzle-piece text-white text-xl"></i>
+                </div>
+                <h3 className="text-xl text-neutral-900 mb-4">Platform Plugins</h3>
+                <p className="text-neutral-600 mb-4">One-click installation for popular e-commerce CMS platforms and marketplaces.</p>
+                <ul className="text-sm text-neutral-500 space-y-2">
+                  <li>• Shopify integration</li>
+                  <li>• WooCommerce plugin</li>
+                  <li>• Magento support</li>
+                </ul>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </section>
 
-      {/* Pricing Section */}
-      <h2 className="text-2xl font-bold mb-6">Pricing Plans</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Basic</CardTitle>
-            <CardDescription>For small businesses</CardDescription>
-            <div className="mt-2">
-              <span className="text-3xl font-bold">$199</span>
-              <span className="text-muted-foreground">/month</span>
+        <section id="pricing" className="px-6 py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl text-neutral-900 mb-4">Choose Your Plan</h2>
+              <p className="text-lg text-neutral-600">Subscription-based service tailored to your business size</p>
             </div>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Up to 500 products in catalog</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>1,000 AI conversations per month</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Basic website integration</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Email support</span>
-              </li>
-            </ul>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">Select Plan</Button>
-          </CardFooter>
-        </Card>
-        
-        <Card className="border-2 border-primary">
-          <CardHeader>
-            <div className="bg-primary text-primary-foreground px-3 py-1 text-xs font-medium rounded-full w-fit mb-2">
-              Most Popular
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white border border-neutral-200 rounded-lg p-8">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl text-neutral-900 mb-2">Small Business</h3>
+                  <div className="text-4xl text-neutral-900 mb-1">$199</div>
+                  <div className="text-neutral-500">/month</div>
+                </div>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Up to 500 products in catalog</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">1,000 AI conversations/month</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Basic website integration</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Email support</span>
+                  </li>
+                </ul>
+                <button className="w-full px-6 py-3 border border-neutral-300 text-neutral-700 rounded-md hover:bg-neutral-50">Get Started</button>
+              </div>
+              <div className="bg-white border-2 border-neutral-900 rounded-lg p-8 relative">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-neutral-900 text-white px-4 py-1 rounded-full text-sm">Popular</div>
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl text-neutral-900 mb-2">Professional</h3>
+                  <div className="text-4xl text-neutral-900 mb-1">$399</div>
+                  <div className="text-neutral-500">/month</div>
+                </div>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Up to 5,000 products in catalog</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">5,000 AI conversations/month</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Advanced website integration</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">API access</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Priority email and chat setup</span>
+                  </li>
+                </ul>
+                <button className="w-full px-6 py-3 bg-neutral-900 text-white rounded-md hover:bg-neutral-800">Get Started</button>
+              </div>
+              <div className="bg-white border border-neutral-200 rounded-lg p-8">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl text-neutral-900 mb-2">Large Business</h3>
+                  <div className="text-4xl text-neutral-900 mb-1">$899</div>
+                  <div className="text-neutral-500">/month</div>
+                </div>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Unlimited products in catalog</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Unlimited AI conversations</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Custom integration options</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Full API access</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">Dedicated account manager</span>
+                  </li>
+                  <li className="flex items-center">
+                    <i className="fa-solid fa-check text-neutral-600 mr-3"></i>
+                    <span className="text-neutral-700">24/7 priority support</span>
+                  </li>
+                </ul>
+                <button className="w-full px-6 py-3 border border-neutral-300 text-neutral-700 rounded-md hover:bg-neutral-50">Contact Sales</button>
+              </div>
             </div>
-            <CardTitle>Professional</CardTitle>
-            <CardDescription>For growing businesses</CardDescription>
-            <div className="mt-2">
-              <span className="text-3xl font-bold">$399</span>
-              <span className="text-muted-foreground">/month</span>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Up to 5,000 products in catalog</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>5,000 AI conversations per month</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Advanced website integration</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>API access</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Priority email & chat support</span>
-              </li>
-            </ul>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">Select Plan</Button>
-          </CardFooter>
-        </Card>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle>Enterprise</CardTitle>
-            <CardDescription>For large businesses</CardDescription>
-            <div className="mt-2">
-              <span className="text-3xl font-bold">$899</span>
-              <span className="text-muted-foreground">/month</span>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Unlimited products in catalog</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Unlimited AI conversations</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Custom integration options</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Full API access</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>Dedicated account manager</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                <span>24/7 priority support</span>
-              </li>
-            </ul>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">Select Plan</Button>
-          </CardFooter>
-        </Card>
-      </div>
-
-      {/* CTA Section */}
-      <Card className="bg-muted">
-        <CardHeader>
-          <CardTitle className="text-2xl">Ready to Transform Your Customer Service?</CardTitle>
-          <CardDescription>
-            Join the hundreds of businesses already using our AI assistants to provide exceptional customer experiences
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg">Get Started Now</Button>
-            <Button size="lg" variant="outline">Schedule a Demo</Button>
           </div>
-        </CardContent>
-      </Card>
+        </section>
+
+        <section id="cta" className="bg-neutral-900 px-6 py-16">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl text-white mb-4">Ready to Transform Your Customer Service?</h2>
+            <p className="text-xl text-neutral-300 mb-8">Join the hundreds of businesses already using our AI systems to provide exceptional customer experience.</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="px-8 py-4 bg-white text-neutral-900 rounded-md hover:bg-neutral-100">Get Started Now</button>
+              <button className="px-8 py-4 border border-neutral-600 text-white rounded-md hover:bg-neutral-800">Schedule a Demo</button>
+            </div>
+            <p className="text-sm text-neutral-400 mt-6">Response within 24-48 hours for custom integrations</p>
+          </div>
+        </section>
+      </main>
+
+      <footer id="footer" className="bg-white border-t border-neutral-200 px-6 py-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 bg-neutral-800 rounded"></div>
+                <span className="text-lg text-neutral-900">AI Assistant Platform</span>
+              </div>
+              <p className="text-neutral-600 text-sm">Intelligent 24/7 AI customer support systems for modern businesses.</p>
+            </div>
+            <div>
+              <h4 className="text-neutral-900 mb-4">Product</h4>
+              <ul className="space-y-2 text-sm text-neutral-600">
+                <li><span className="hover:text-neutral-900 cursor-pointer">Features</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Integration</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">API Docs</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Security</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-neutral-900 mb-4">Company</h4>
+              <ul className="space-y-2 text-sm text-neutral-600">
+                <li><span className="hover:text-neutral-900 cursor-pointer">About</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Blog</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Careers</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Contact</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-neutral-900 mb-4">Support</h4>
+              <ul className="space-y-2 text-sm text-neutral-600">
+                <li><span className="hover:text-neutral-900 cursor-pointer">Help Center</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Documentation</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Community</span></li>
+                <li><span className="hover:text-neutral-900 cursor-pointer">Status</span></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-neutral-200 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-sm text-neutral-600">© 2025 AI Assistant Platform. All rights reserved.</p>
+            <div className="flex space-x-6 mt-4 sm:mt-0">
+              <span className="text-neutral-400 hover:text-neutral-600 cursor-pointer"><i className="fa-brands fa-twitter"></i></span>
+              <span className="text-neutral-400 hover:text-neutral-600 cursor-pointer"><i className="fa-brands fa-linkedin"></i></span>
+              <span className="text-neutral-400 hover:text-neutral-600 cursor-pointer"><i className="fa-brands fa-github"></i></span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

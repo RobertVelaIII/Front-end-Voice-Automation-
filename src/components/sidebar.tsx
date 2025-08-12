@@ -70,7 +70,7 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
   };
 
   return (
-    <div className={cn("h-full flex flex-col bg-background", className)}>
+    <div className={cn("h-full flex flex-col bg-background border-r", className)}>
       <div className="p-4 flex items-center justify-between">
         {!isCollapsed && <h2 className="text-lg font-semibold">Dashboard</h2>}
         {isActuallyMobile ? (
