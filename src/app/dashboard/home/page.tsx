@@ -72,7 +72,7 @@ export default function HomePage() {
                   <FontAwesomeIcon icon={faRocket} className="text-neutral-700 text-xl mr-3" />
                   <h3 className="text-xl text-neutral-900">New Navigation Features and Performance Boost</h3>
                 </div>
-                <div className="text-sm text-neutral-500 mb-4">January 15, 2025 - 2:30 PM</div>
+                <div className="text-sm text-neutral-500 mb-4">August 12, 2025 - 3:00 AM</div>
                 <p className="text-neutral-700 mb-4">We've implemented a sidebar with new sections to improve navigation. We've added an ASCII button to add-ons, improved the help section, and better organized settings.</p>
                 <p className="text-neutral-700">We've optimized our servers on Fly.io for enhanced performance and reliability.</p>
               </div>
@@ -82,7 +82,7 @@ export default function HomePage() {
                   <FontAwesomeIcon icon={faHeart} className="text-neutral-700 text-xl mr-3" />
                   <h3 className="text-xl text-neutral-900">User Experience Improvements</h3>
                 </div>
-                <div className="text-sm text-neutral-500 mb-4">January 18, 2025 - 10:15 AM</div>
+                <div className="text-sm text-neutral-500 mb-4">August 12, 2025 - 3:00 AM</div>
                 <p className="text-neutral-700 mb-4">We've streamlined the dashboard interface for better usability and faster access to key features.</p>
                 <p className="text-neutral-700">New accessibility features have been added to ensure everyone can use our platform effectively.</p>
               </div>
@@ -159,7 +159,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-neutral-900 mb-2">Fly.io Migration Complete</h3>
                 <p className="text-sm text-neutral-600 mb-3">Our server migration to Fly.io has been successfully completed, resulting in improved performance and reliability.</p>
-                <div className="text-xs text-neutral-500">January 12, 2025</div>
+                <div className="text-xs text-neutral-500">August 12, 2025 - 3:00 AM</div>
               </article>
 
               <article className="border border-neutral-200 p-6">
@@ -168,7 +168,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-neutral-900 mb-2">Enhanced Call Duration Tracking</h3>
                 <p className="text-sm text-neutral-600 mb-3">New precise call duration tracking with millisecond accuracy now available in all call logs.</p>
-                <div className="text-xs text-neutral-500">January 10, 2025</div>
+                <div className="text-xs text-neutral-500">August 12, 2025 - 3:00 AM</div>
               </article>
 
               <article className="border border-neutral-200 p-6">
@@ -177,7 +177,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-neutral-900 mb-2">Sidebar Navigation Launch</h3>
                 <p className="text-sm text-neutral-600 mb-3">New sidebar navigation makes it easier to access different sections and manage your call logs efficiently.</p>
-                <div className="text-xs text-neutral-500">January 8, 2025</div>
+                <div className="text-xs text-neutral-500">August 12, 2025 - 3:00 AM</div>
               </article>
             </div>
           </div>
