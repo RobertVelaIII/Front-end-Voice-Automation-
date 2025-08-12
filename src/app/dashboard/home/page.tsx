@@ -49,6 +49,23 @@ export default function HomePage() {
               <p className="text-lg text-neutral-600">Stay informed about our recent improvements and new features</p>
             </div>
 
+            <div className="bg-black text-white p-6 rounded-lg mb-8">
+              <div className="flex items-center mb-4">
+                <FontAwesomeIcon icon={faRocket} className="text-white text-xl mr-3" />
+                <h3 className="text-xl text-white">Development Progress Update</h3>
+              </div>
+              <div className="text-sm text-gray-300 mb-4">August 12, 2025 - 3:00 AM</div>
+              <p className="text-gray-100 mb-4">We have punched a dent in the UI, will work on UX and then start implementing back end to start enabling calls.</p>
+              <div className="w-full bg-gray-700 rounded-full h-2 mt-4">
+                <div className="bg-white h-2 rounded-full" style={{ width: '35%' }}></div>
+              </div>
+              <div className="flex justify-between text-xs text-gray-300 mt-1">
+                <span>UI</span>
+                <span>UX</span>
+                <span>Backend</span>
+              </div>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               <div className="bg-neutral-50 p-6 border border-neutral-200">
                 <div className="flex items-center mb-4">
@@ -61,16 +78,13 @@ export default function HomePage() {
               </div>
 
               <div className="bg-white border border-neutral-200 p-6">
-                <h3 className="text-lg text-neutral-900 mb-4">Editable Announcements</h3>
-                <div className="text-sm text-neutral-500 mb-4">Last updated: January 15, 2025 - 3:45 PM</div>
-                <textarea 
-                  className="w-full h-32 p-3 border border-neutral-300 text-neutral-700 resize-none focus:outline-none focus:ring-2 focus:ring-neutral-400" 
-                  placeholder="Add your custom announcements and updates here..."
-                  defaultValue="Enhanced call logging capabilities with improved search functionality and better data organization. New export features coming soon."
-                />
-                <button className="mt-3 bg-black text-white px-4 py-2 text-sm hover:bg-neutral-800 transition-colors">
-                  Save Changes
-                </button>
+                <div className="flex items-center mb-4">
+                  <FontAwesomeIcon icon={faHeart} className="text-neutral-700 text-xl mr-3" />
+                  <h3 className="text-xl text-neutral-900">User Experience Improvements</h3>
+                </div>
+                <div className="text-sm text-neutral-500 mb-4">January 18, 2025 - 10:15 AM</div>
+                <p className="text-neutral-700 mb-4">We've streamlined the dashboard interface for better usability and faster access to key features.</p>
+                <p className="text-neutral-700">New accessibility features have been added to ensure everyone can use our platform effectively.</p>
               </div>
             </div>
           </div>
