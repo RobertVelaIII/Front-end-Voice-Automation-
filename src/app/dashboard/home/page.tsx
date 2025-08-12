@@ -1,119 +1,216 @@
 "use client";
 
-import { useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell, faRocket, faHeart, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 
 export default function HomePage() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/dashboard'); // Redirect to login if not authenticated
-    }
-  }, [user, loading, router]);
-
-  if (loading || !user) {
-    return (
-        <div className="flex justify-center items-center h-screen">Loading...</div>
-    );
-  }
-
   return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold">Developer team update!🧑‍💻</h1>
-        </div>
-        
-        {/* What's New Section */}
-        <Card className="mb-8">
-          <CardHeader className="bg-primary/5">
-            <CardTitle className="flex items-center gap-2">
-              <span className="inline-block p-1 bg-primary text-white rounded-full">🎉</span>
-              What's the latest new update? - August 10, 2025 3:44 AM Update
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-6">
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-medium mb-2">New Navigation Features & Performance Boost</h3>
-                <p className="text-muted-foreground">We've improved the sidebar with new sections to help you get around easier:</p>
-                <ul className="list-disc ml-6 mt-2 space-y-1">
-                  <li>Added <strong>Ask AI</strong> button for quick assistance (coming soon)</li>
-                  <li>New <strong>Add-ons</strong> section with premium services</li>
-                  <li>Improved <strong>Help</strong> section with documentation and support</li>
-                  <li>Better organization of settings and billing options</li>
-                </ul>
-                <p className="text-muted-foreground mt-4">Additionally, we've optimized our servers on Fly.io to always stay awake now, which means no more cold starts, and faster website loading times! 🚀</p>
+    <div className="h-full text-base-content">
+      <header id="header" className="bg-white border-b border-neutral-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <h1 className="text-xl text-black">CallLogs</h1>
               </div>
-              
-              <div className="relative bg-white dark:bg-gray-800 p-6 rounded-lg border-2 border-blue-600 shadow-lg overflow-hidden">
-                {/* Background decorative elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-blue-200 dark:bg-blue-700/30 rounded-full opacity-20"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 -ml-6 -mb-6 bg-indigo-200 dark:bg-indigo-700/30 rounded-full opacity-20"></div>
-                
-                {/* Header with icon */}
-                <div className="relative">
-                  <h3 className="text-xl font-bold mb-3 flex items-center gap-2 text-blue-700 dark:text-blue-300">
-                    <span className="flex items-center justify-center bg-blue-600 text-white p-1 rounded-full w-7 h-7 text-center">⚡</span>
-                    <span>CRITICAL PATH</span>
-                  </h3>
-                  
-                  {/* Progress bar */}
-                  <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full" style={{width: '75%'}}></div>
+              <nav className="hidden md:ml-8 md:flex md:space-x-8">
+                <span className="text-neutral-900 hover:text-neutral-600 px-3 py-2 text-sm cursor-pointer">Home</span>
+                <span className="text-neutral-500 hover:text-neutral-900 px-3 py-2 text-sm cursor-pointer">Dashboard</span>
+                <span className="text-neutral-500 hover:text-neutral-900 px-3 py-2 text-sm cursor-pointer">Logs</span>
+                <span className="text-neutral-500 hover:text-neutral-900 px-3 py-2 text-sm cursor-pointer">Settings</span>
+              </nav>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button className="text-neutral-500 hover:text-neutral-900">
+                <FontAwesomeIcon icon={faBell} />
+              </button>
+              <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123" alt="User Avatar" className="h-8 w-8 rounded-full" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main id="main-content">
+        <section id="hero-section" className="bg-neutral-50 h-[400px] flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h1 className="text-4xl text-neutral-900 mb-4">Welcome to CallLogs</h1>
+              <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">Stay updated with the latest developer team updates, news, and feature announcements. Your comprehensive call management solution continues to evolve.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="updates-section" className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl text-neutral-900 mb-4">Latest Updates</h2>
+              <p className="text-lg text-neutral-600">Stay informed about our recent improvements and new features</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+              <div className="bg-neutral-50 p-6 border border-neutral-200">
+                <div className="flex items-center mb-4">
+                  <FontAwesomeIcon icon={faRocket} className="text-neutral-700 text-xl mr-3" />
+                  <h3 className="text-xl text-neutral-900">New Navigation Features and Performance Boost</h3>
+                </div>
+                <div className="text-sm text-neutral-500 mb-4">January 15, 2025 - 2:30 PM</div>
+                <p className="text-neutral-700 mb-4">We've implemented a sidebar with new sections to improve navigation. We've added an ASCII button to add-ons, improved the help section, and better organized settings.</p>
+                <p className="text-neutral-700">We've optimized our servers on Fly.io for enhanced performance and reliability.</p>
+              </div>
+
+              <div className="bg-white border border-neutral-200 p-6">
+                <h3 className="text-lg text-neutral-900 mb-4">Editable Announcements</h3>
+                <div className="text-sm text-neutral-500 mb-4">Last updated: January 15, 2025 - 3:45 PM</div>
+                <textarea 
+                  className="w-full h-32 p-3 border border-neutral-300 text-neutral-700 resize-none focus:outline-none focus:ring-2 focus:ring-neutral-400" 
+                  placeholder="Add your custom announcements and updates here..."
+                  defaultValue="Enhanced call logging capabilities with improved search functionality and better data organization. New export features coming soon."
+                />
+                <button className="mt-3 bg-black text-white px-4 py-2 text-sm hover:bg-neutral-800 transition-colors">
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="priorities-section" className="py-16 bg-neutral-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <h2 className="text-2xl text-neutral-900 mb-6">Current Priorities & Critical Path</h2>
+                <div className="space-y-4">
+                  <div className="bg-white p-4 border border-neutral-200 flex items-center">
+                    <div className="w-2 h-2 bg-black rounded-full mr-4"></div>
+                    <div className="flex-1">
+                      <h4 className="text-neutral-900">Call Log Search Enhancement</h4>
+                      <p className="text-sm text-neutral-600">Improving search functionality across all call records</p>
+                    </div>
+                    <span className="text-xs text-neutral-500">High Priority</span>
                   </div>
-                  
-                  <p className="mb-4 font-medium text-gray-800 dark:text-gray-200">Our top priority is enabling powerful automated business calls:</p>
-                  
-                  {/* Timeline-style list */}
-                  <div className="space-y-4 relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-blue-400 dark:before:bg-blue-600">
-                    <div className="relative">
-                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-800"></div>
-                      <h4 className="font-bold text-blue-700 dark:text-blue-300">Website Analysis</h4>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">Improved accuracy in analyzing your business website for better call context</p>
+                  <div className="bg-white p-4 border border-neutral-200 flex items-center">
+                    <div className="w-2 h-2 bg-neutral-400 rounded-full mr-4"></div>
+                    <div className="flex-1">
+                      <h4 className="text-neutral-900">Audio Recording Optimization</h4>
+                      <p className="text-sm text-neutral-600">Enhancing MP3 download and playback features</p>
                     </div>
-                    
-                    <div className="relative">
-                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-800"></div>
-                      <h4 className="font-bold text-blue-700 dark:text-blue-300">High-Energy Sales Scripts</h4>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">AI now creates Jordan Belfort-style sales scripts that drive conversions</p>
-                    </div>
-                    
-                    <div className="relative">
-                      <div className="absolute left-[-24px] top-0 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-800"></div>
-                      <h4 className="font-bold text-blue-700 dark:text-blue-300">Business Recognition</h4>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">Enhanced identification of your business name and details in every call</p>
-                    </div>
+                    <span className="text-xs text-neutral-500">Medium Priority</span>
                   </div>
-                  
-                  <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/50 rounded-md border border-blue-300 dark:border-blue-700">
-                    <p className="text-sm font-medium flex items-center gap-2 text-gray-800 dark:text-gray-200">
-                      <span className="text-green-600 dark:text-green-400">✅</span>
-                      These improvements ensure your automated calls sound professional and represent your business accurately.
-                    </p>
+                  <div className="bg-white p-4 border border-neutral-200 flex items-center">
+                    <div className="w-2 h-2 bg-neutral-300 rounded-full mr-4"></div>
+                    <div className="flex-1">
+                      <h4 className="text-neutral-900">Notes System Upgrade</h4>
+                      <p className="text-sm text-neutral-600">Better organization and search within call notes</p>
+                    </div>
+                    <span className="text-xs text-neutral-500">In Progress</span>
                   </div>
                 </div>
               </div>
-              
+
               <div>
-                <h3 className="text-lg font-medium mb-2">Coming Soon</h3>
-                <p className="text-muted-foreground">We're working on these exciting features:</p>
-                <ul className="list-disc ml-6 mt-2 space-y-1">
-                  <li>AI X Accounts - Premium social media management</li>
-                  <li>AI Instagram - Grow your Instagram presence</li>
-                  <li>Custom AI Assistants - Personalized for your business</li>
-                </ul>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-blue-300 dark:border-blue-700 shadow-sm">
-                <p className="text-sm font-medium text-gray-800 dark:text-gray-200">Thank you for being part of our journey! We're constantly improving Callify to better serve your business needs.</p>
+                <h2 className="text-2xl text-neutral-900 mb-6">Coming Soon</h2>
+                <div className="bg-white border border-neutral-200 p-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-neutral-900 mb-2">AIX Account Integration</h4>
+                      <p className="text-sm text-neutral-600">Advanced AI-powered call analysis and insights</p>
+                    </div>
+                    <div>
+                      <h4 className="text-neutral-900 mb-2">AI Instagram Integration</h4>
+                      <p className="text-sm text-neutral-600">Social media call tracking and management</p>
+                    </div>
+                    <div>
+                      <h4 className="text-neutral-900 mb-2">Custom AI Assistance</h4>
+                      <p className="text-sm text-neutral-600">Personalized AI support for call management</p>
+                    </div>
+                  </div>
+                  <div className="mt-6 pt-6 border-t border-neutral-200">
+                    <p className="text-xs text-neutral-500">These features will enhance your call management experience with intelligent automation and deeper insights.</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </CardContent>
-        </Card>  
-      </div>
+          </div>
+        </section>
+
+        <section id="news-section" className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl text-neutral-900 mb-8">Recent News & Announcements</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <article className="border border-neutral-200 p-6">
+                <div className="w-full h-32 bg-neutral-300 mb-4 flex items-center justify-center">
+                  <span className="text-white text-sm">Server Infrastructure Update</span>
+                </div>
+                <h3 className="text-neutral-900 mb-2">Fly.io Migration Complete</h3>
+                <p className="text-sm text-neutral-600 mb-3">Our server migration to Fly.io has been successfully completed, resulting in improved performance and reliability.</p>
+                <div className="text-xs text-neutral-500">January 12, 2025</div>
+              </article>
+
+              <article className="border border-neutral-200 p-6">
+                <div className="w-full h-32 bg-neutral-300 mb-4 flex items-center justify-center">
+                  <span className="text-white text-sm">Feature Release</span>
+                </div>
+                <h3 className="text-neutral-900 mb-2">Enhanced Call Duration Tracking</h3>
+                <p className="text-sm text-neutral-600 mb-3">New precise call duration tracking with millisecond accuracy now available in all call logs.</p>
+                <div className="text-xs text-neutral-500">January 10, 2025</div>
+              </article>
+
+              <article className="border border-neutral-200 p-6">
+                <div className="w-full h-32 bg-neutral-300 mb-4 flex items-center justify-center">
+                  <span className="text-white text-sm">UI Improvement</span>
+                </div>
+                <h3 className="text-neutral-900 mb-2">Sidebar Navigation Launch</h3>
+                <p className="text-sm text-neutral-600 mb-3">New sidebar navigation makes it easier to access different sections and manage your call logs efficiently.</p>
+                <div className="text-xs text-neutral-500">January 8, 2025</div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="thank-you-section" className="py-16 bg-neutral-50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-2xl text-neutral-900 mb-6">Thank You for Being Part of Our Journey</h2>
+            <p className="text-lg text-neutral-600 mb-8">We're continuously improving CallLogs to better serve your business needs. Your feedback and support drive our innovation as we build the most comprehensive call management solution.</p>
+            <div className="flex justify-center space-x-4">
+              <button className="bg-black text-white px-6 py-3 hover:bg-neutral-800 transition-colors">
+                <FontAwesomeIcon icon={faHeart} className="mr-2" />
+                Share Feedback
+              </button>
+              <button className="border border-neutral-300 text-neutral-700 px-6 py-3 hover:bg-neutral-50 transition-colors">
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+                Contact Support
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer id="footer" className="bg-white border-t border-neutral-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-lg text-neutral-900">CallLogs</h3>
+              <p className="text-sm text-neutral-600">Professional call management solution</p>
+            </div>
+            <div className="flex space-x-6">
+              <span className="text-neutral-500 hover:text-neutral-900 cursor-pointer">
+                <FontAwesomeIcon icon={faTwitter} />
+              </span>
+              <span className="text-neutral-500 hover:text-neutral-900 cursor-pointer">
+                <FontAwesomeIcon icon={faLinkedin} />
+              </span>
+              <span className="text-neutral-500 hover:text-neutral-900 cursor-pointer">
+                <FontAwesomeIcon icon={faGithub} />
+              </span>
+            </div>
+          </div>
+          <div className="mt-6 pt-6 border-t border-neutral-200 text-center">
+            <p className="text-xs text-neutral-500">© 2025 CallLogs. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }

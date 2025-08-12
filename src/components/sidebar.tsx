@@ -99,8 +99,7 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
             children={[
               { href: "/dashboard/organizations/switch", label: "Switch Organization" },
               { href: "/dashboard/organizations/manage", label: "Manage Organizations" },
-              { href: "/dashboard/organizations/settings", label: "Organization Settings" },
-              { href: "/dashboard/organizations/assistants", label: "AI Assistants" },
+              { href: "/dashboard/organizations/settings", label: "Organization Settings" }
             ]}
           />
           
@@ -109,11 +108,7 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
             label="Analytics"
             isCollapsed={isCollapsed}
             children={[
-              { href: "/dashboard/analytics/overview", label: "Dashboard" },
-              { href: "/dashboard/analytics/calls", label: "Call Performance" },
-              { href: "/dashboard/analytics/conversion", label: "Conversion Rates" },
-              { href: "/dashboard/analytics/roi", label: "ROI Tracking" },
-              { href: "/dashboard/analytics/reports", label: "Custom Reports" },
+              { href: "/dashboard/analytics/overview", label: "Dashboard" }
             ]}
           />
           
@@ -157,9 +152,7 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
             children={[
               { href: "/dashboard/settings/account", label: "Account" },
               { href: "/dashboard/settings/profile", label: "Profile" },
-              { href: "/dashboard/settings/security", label: "Security & Privacy" },
-              { href: "/dashboard/settings/integrations", label: "Integrations" },
-              { href: "/dashboard/settings/api", label: "API & Webhooks" },
+              { href: "/dashboard/settings/security", label: "Security & Privacy" }
             ]}
           />
           
@@ -188,10 +181,9 @@ export function Sidebar({ className, isMobile = false, onMobileClose }: SidebarP
             label="Help"
             isCollapsed={isCollapsed}
             children={[
-              { href: "/dashboard/help/documentation", label: "Documentation" },
               { href: "/dashboard/help/tutorials", label: "Tutorials" },
               { href: "/dashboard/help/support", label: "Contact Support" },
-              { href: "/dashboard/help/community", label: "Community" },
+              { href: "/dashboard/help/community", label: "Community" }
             ]}
           />
         </nav>
